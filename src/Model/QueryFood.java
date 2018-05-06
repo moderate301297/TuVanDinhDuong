@@ -239,5 +239,21 @@ public class QueryFood {
 		}
 		return null;
 	}
+           public static ArrayList<String> getFavoriteFood(){
+        ArrayList<String > favorite = new ArrayList<String>();
+        try (Connection conn = ConnectSQL.connectsql()){
+            String querry = "SELECT so_thich FROM favorite_user";
+            PreparedStatement ps = conn.prepareStatement(querry);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                String a = rs.getString("so_thich");
+                favorite.add(a);
+            }
+            return favorite;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

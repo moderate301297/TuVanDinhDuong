@@ -16,7 +16,7 @@ public class ConnectSQL {
             Class.forName("com.mysql.jdbc.Driver");
 //          Create Connection variable in order to connect to database
             Connection conn = null;
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hcstt", "root", "123456");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hcstt", "root", "12121996nghia");
             System.out.println("Database in connected!");
             return conn;
         }
