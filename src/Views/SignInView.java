@@ -1,8 +1,11 @@
 package Views;
 
+import Controller.MainController;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -12,6 +15,8 @@ public class SignInView extends JFrame {
 	private JLabel jLabelTitle, jLabelUser, jLabelPassword;
 	private JPanel jPanel1, jPanel2, jPanel3;
 	private JTextField textField_User, textField_Password;
+	private String ten;
+	private String id;
 	// End of variables declaration//GEN-END:variables
 
 	public SignInView() {
@@ -165,7 +170,7 @@ public class SignInView extends JFrame {
 	private void jButtonContinueActionPerformed(ActionEvent evt) {// GEN-FIRST:event_jButton2ActionPerformed
 		// TODO add your handling code here:
 		if (checkValidValue()) {
-			HomeView homeView = new HomeView();
+			HomeViewUser homeView = new HomeViewUser(id, ten);
 			homeView.setVisible(true);
 			this.setVisible(false);
 		}
@@ -173,7 +178,17 @@ public class SignInView extends JFrame {
 
 	public boolean checkValidValue() {
 		if (textField_User.getText().equals("") || textField_Password.getText().equals("")) {
-			JOptionPane.showMessageDialog(this, "chua nhập đủ giá trị");
+			JOptionPane.showMessageDialog(this, "chưa nhập đủ giá trị");
+			return false;
+		}
+		String tendangnhap = textField_User.getText();
+		String matkhau = textField_Password.getText();
+		ArrayList<String> arrayList = MainController.getUser(tendangnhap, matkhau);
+	    id = arrayList.get(0);
+	    ten = arrayList.get(1);
+
+		if (arrayList == null ) {
+			JOptionPane.showMessageDialog(this, "chưa nhập đủ giá trị");
 			return false;
 		}
 		return true;

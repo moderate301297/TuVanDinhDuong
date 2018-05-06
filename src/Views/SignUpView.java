@@ -1,8 +1,10 @@
 package Views;
 
+import Model.User;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.*;
 
@@ -194,7 +196,16 @@ public class SignUpView extends JFrame {
 	public boolean checkValidValue() {
 		if (textField_Name.getText().equals("") || textField_User.getText().equals("")
 				|| textField_Password.getText().equals("")) {
-			JOptionPane.showMessageDialog(this, "chua nhập đủ giá trị");
+			JOptionPane.showMessageDialog(this, "chưa nhập đủ giá trị");
+			return false;
+		}
+		String ten = textField_Name.getText();
+		String tendangnhap = textField_User.getText();
+		String matkhau = textField_Password.getText();
+		try {
+			User.InsertUser(ten, tendangnhap, matkhau);
+		} catch (SQLException e) {
+			System.err.println("error: " + e);
 			return false;
 		}
 		return true;

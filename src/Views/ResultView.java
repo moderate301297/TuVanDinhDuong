@@ -6,12 +6,15 @@
 package Views;
 
 import Controller.MainController;
+import Model.User;
 import Util.Common.LuaChon;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -28,10 +31,12 @@ public class ResultView extends JFrame {
 	private JComboBox numberDownWeight, numberUpWeight;
 	private JButton jButtonContinue;
 	private JPanel jPanel1;
+	String idUsed;
 	// End of variables declaration//GEN-END:variables
 
-	public ResultView() {
-		initComponents();
+	public ResultView(String id) {
+		idUsed = id;
+		initComponents(idUsed);
 		// showResult();
 	}
 
@@ -42,7 +47,7 @@ public class ResultView extends JFrame {
 		textResult.setText(result);
 	}
 
-	private void initComponents() {
+	private void initComponents(String idUsed) {
 
 		jPanel1 = new JPanel();
 		jLabelTitle = new JLabel();
@@ -190,7 +195,7 @@ public class ResultView extends JFrame {
 				GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
 
 		pack();
-	}// </editor-fold>//GEN-END:initComponents
+	}
 
 	private void giam1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_giam1ActionPerformed
 		// TODO add your handling code here:
@@ -199,6 +204,11 @@ public class ResultView extends JFrame {
 		selectUpWeight.setSelected(false);
 		selectDownWeight.setSelected(true);
 	}// GEN-LAST:event_giam1ActionPerformed
+	
+	private void giam3ActionPerformed(ActionEvent evt) {// GEN-FIRST:event_giam3ActionPerformed
+		// TODO add your handling code here:
+		indexSelectDown = numberDownWeight.getSelectedIndex();
+	}// GEN-LAST:event_giam3ActionPerformed
 
 	private void giucanActionPerformed(ActionEvent evt) {// GEN-FIRST:event_giucanActionPerformed
 		// TODO add your handling code here:
@@ -221,23 +231,40 @@ public class ResultView extends JFrame {
 		indexSelectUp = numberUpWeight.getSelectedIndex();
 	}// GEN-LAST:event_tang3ActionPerformed
 
-	private void giam3ActionPerformed(ActionEvent evt) {// GEN-FIRST:event_giam3ActionPerformed
-		// TODO add your handling code here:
-		indexSelectDown = numberDownWeight.getSelectedIndex();
-	}// GEN-LAST:event_giam3ActionPerformed
-
 	private void jButton1ActionPerformed(ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
 		// TODO add your handling code here:
-		// thuc thien code cho button xac nhan.
-		ResultMenuView listMenuView = new ResultMenuView();
+		// thuc hien code cho button xac nhan.
+		String muctieu = null;
+		if (select == 0) {
+			muctieu = "tang " + indexSelectUp + " can";
+			try {
+				User.UpdateUserIndex(idUsed, select, indexSelectUp, TDEE);
+			} catch (SQLException e) {
+				System.out.println("error: " + e);
+			}
+		} else if (select == 1) {
+			muctieu = "giam " + indexSelectDown + " can";
+			try {
+				User.UpdateUserIndex(idUsed, select, indexSelectDown, TDEE);
+			} catch (SQLException e) {
+				System.out.println("error: " + e);
+			}
+		} else {
+			muctieu = "giu can";
+			try {
+				User.UpdateUserIndex(idUsed, select, 0, TDEE);
+			} catch (SQLException e) {
+				System.out.println("error: " + e);
+			}
+		}
+		try {
+			User.UpdateMucTieu(idUsed, muctieu);
+		} catch (SQLException e) {
+			System.out.println("error: " + e);
+		}
+		
+		ResultMenuView listMenuView = new ResultMenuView(idUsed); //thuc don
 		listMenuView.setVisible(true);
-		MainController controller = new MainController();
-		float calo = controller.getCaloNeed(select, indexSelectUp, indexSelectDown, TDEE);
-		listMenuView.setCalo(calo);
-		listMenuView.setCaloTungBua(controller.CaloSang, controller.CaloTrua, controller.CaloToi);
-		listMenuView.setTable(1);
-		listMenuView.setTable(2);
-		listMenuView.setTable(3);
 		this.setVisible(false);
-	}// GEN-LAST:event_jButton1ActionPerformed
+	}
 }

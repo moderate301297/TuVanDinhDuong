@@ -8,25 +8,27 @@ import java.util.logging.Logger;
 
 import javax.swing.*;
 
-public class HomeView extends JFrame {
+public class HomeViewUser extends JFrame {
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
-	private JButton jButtonHobby, jButtonAdvisory, jButtonMenu, jButtonExit, jButtonSignIn, jButtonSignUp;
-	private JLabel jLabelTitle;
+	private JButton jButtonHobby, jButtonAdvisory, jButtonMenu, jButtonExit, jButtonLogOut;
+	private JLabel jLabelTitle, jLabelTitleUser;
 	private JPanel jPanelHome;
+	public String idUsed, nameUsed;
 	// End of variables declaration//GEN-END:variables
 
-	public HomeView() {
-		initComponents();
+	public HomeViewUser(String id, String ten) {
+		idUsed = id;
+		nameUsed = ten;
+		initComponents(ten);
 	}
-
-	private void initComponents() {
+	private void initComponents(String ten) {
 
 		
 		jPanelHome = new JPanel();
 		jLabelTitle = new JLabel();
-		jButtonSignIn = new JButton();
-		jButtonSignUp = new JButton();
+		jLabelTitleUser = new JLabel();
+		jButtonLogOut = new JButton();
 		jButtonHobby = new JButton();
 		jButtonAdvisory = new JButton();
 		jButtonMenu = new JButton();
@@ -39,20 +41,16 @@ public class HomeView extends JFrame {
 		jLabelTitle.setFont(new Font("Times New Roman", 1, 24)); // NOI18N
 		jLabelTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		jLabelTitle.setText("Hệ tư vấn dinh dưỡng");
+		
+		jLabelTitleUser.setFont(new Font("Times New Roman", 1, 10)); // NOI18N
+		jLabelTitleUser.setHorizontalAlignment(SwingConstants.CENTER);
+		jLabelTitleUser.setText("Xin chào " + ten);
 
-		jButtonSignIn.setFont(new Font("Times New Roman", 1, 10)); // NOI18N
-		jButtonSignIn.setText("Đăng ký");
-		jButtonSignIn.addActionListener(new ActionListener() {
+		jButtonLogOut.setFont(new Font("Times New Roman", 1, 10)); // NOI18N
+		jButtonLogOut.setText("Đăng xuất");
+		jButtonLogOut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				jButtonSignUpActionPerformed(evt);
-			}
-		});
-
-		jButtonSignUp.setFont(new Font("Times New Roman", 1, 10)); // NOI18N
-		jButtonSignUp.setText("Đăng nhập");
-		jButtonSignUp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				jButtonSignInActionPerformed(evt);
+				jButtonLogOutpActionPerformed(evt);
 			}
 		});
 
@@ -99,10 +97,10 @@ public class HomeView extends JFrame {
 				.addComponent(jLabelTitle, 0, 150, 400)
 				.addGroup(jPanel3Layout.createSequentialGroup().addContainerGap(210, 210)
 						.addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.TRAILING).addComponent(
-								jButtonSignUp, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)))
+								jLabelTitleUser, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)))
 				.addGroup(jPanel3Layout.createSequentialGroup().addContainerGap(300, 300)
 						.addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.TRAILING).addComponent(
-								jButtonSignIn, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)))
+								jButtonLogOut, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)))
 				.addGroup(GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
 						.addContainerGap(109, Short.MAX_VALUE)
 						.addGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
@@ -112,9 +110,9 @@ public class HomeView extends JFrame {
 								.addComponent(jButtonHobby, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE))
 						.addGap(105, 105, 105)));
 		jPanel3Layout.setVerticalGroup(jPanel3Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-				.addGroup(jPanel3Layout.createSequentialGroup().addComponent(jButtonSignIn, GroupLayout.PREFERRED_SIZE,
+				.addGroup(jPanel3Layout.createSequentialGroup().addComponent(jButtonLogOut, GroupLayout.PREFERRED_SIZE,
 						30, GroupLayout.PREFERRED_SIZE))
-				.addGroup(jPanel3Layout.createSequentialGroup().addComponent(jButtonSignUp, GroupLayout.PREFERRED_SIZE,
+				.addGroup(jPanel3Layout.createSequentialGroup().addComponent(jLabelTitleUser, GroupLayout.PREFERRED_SIZE,
 						30, GroupLayout.PREFERRED_SIZE))
 				.addGroup(jPanel3Layout.createSequentialGroup().addGap(30, 30, 30)
 						.addComponent(jLabelTitle, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
@@ -138,35 +136,32 @@ public class HomeView extends JFrame {
 		pack();
 	}
 	
-	private void jButtonSignUpActionPerformed(ActionEvent evt) {
+	private void jButtonLogOutpActionPerformed(ActionEvent evt) {
 		// TODO add your handling code here:
-		SignUpView signUpView = new SignUpView();
-		signUpView.setVisible(true);
-		this.setVisible(false);
-	}// GEN-LAST:event_jButton2ActionPerformed
-	
-	private void jButtonSignInActionPerformed(ActionEvent evt) {
-		// TODO add your handling code here:
-		SignInView signInView = new SignInView();
-		signInView.setVisible(true);
+		HomeView homeView = new HomeView();
+		homeView.setVisible(true);
 		this.setVisible(false);
 	}// GEN-LAST:event_jButton2ActionPerformed
 
 	private void jButtonAdvisoryActionPerformed(ActionEvent evt) {
-		JOptionPane.showMessageDialog(this, "Bạn phải đăng nhập trước khi sử dụng tính năng này");
+		// TODO add your handling code here:
+		InputDataView inputDataView = new InputDataView(idUsed,nameUsed);
+		inputDataView.setVisible(true);
+		this.setVisible(false);
 	}// GEN-LAST:event_jButton2ActionPerformed
 
 	private void jButtonHobbyActionPerformed(ActionEvent evt) {
 		// TODO add your handling code here:
-		JOptionPane.showMessageDialog(this, "Bạn phải đăng nhập trước khi sử dụng tính năng này");
+		ListViewFavorite viewFavotite = new ListViewFavorite();
+//		viewFavotite.setVisible(true);
+		this.setVisible(false);
 	}// GEN-LAST:event_jButton1ActionPerformed
 
 	private void jButtonMenuActionPerformed(ActionEvent evt) {
 		// TODO add your handling code here:
-		JOptionPane.showMessageDialog(this, "Bạn phải đăng nhập trước khi sử dụng tính năng này");
-//		ListMenuView listMenuView = new ListMenuView();
-//		listMenuView.setVisible(true);
-//		this.setVisible(false);
+		ResultMenuView resultMenuView = new ResultMenuView(idUsed);
+		resultMenuView.setVisible(true);
+		this.setVisible(false);
 	}// GEN-LAST:event_jButton3ActionPerformed
 
 	private void jButtonExitActionPerformed(ActionEvent evt) {

@@ -5,10 +5,6 @@
  */
 package Util;
 
-/**
- *
- * @author DoThanh
- */
 public class GlobalValue {
     
 }

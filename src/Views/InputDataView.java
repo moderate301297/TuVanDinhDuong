@@ -1,13 +1,10 @@
-/*0
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Views;
 
+import Model.User;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.*;
 
@@ -23,13 +20,16 @@ public class InputDataView extends JFrame {
 			jLabelSex, jLabelLevel;
 	private JPanel jPanel1, jPanel2, jPanel3;
 	private JTextField textField_Weight, textField_Height, textField_Age;
+	public String idUsed, nameUsed;
 	// End of variables declaration//GEN-END:variables
 
-	public InputDataView() {
-		initComponents();
+	public InputDataView(String id, String ten) {
+		idUsed = id;
+		nameUsed = ten;
+		initComponents(nameUsed);
 	}
 
-	private void initComponents() {
+	private void initComponents(String ten) {
 
 		jPanel1 = new JPanel();
 		jPanel2 = new JPanel();
@@ -101,7 +101,7 @@ public class InputDataView extends JFrame {
 		jLabelTitle.setText("Hệ tư vấn dinh dưỡng");
 
 		jLabelWelcome.setFont(new Font("Times New Roman", 1, 10)); // NOI18N
-		jLabelWelcome.setText("Xin chào ");
+		jLabelWelcome.setText("Xin chào " + ten);
 
 		jPanel3.setBackground(new Color(0, 204, 204));
 
@@ -236,10 +236,10 @@ public class InputDataView extends JFrame {
 								GroupLayout.PREFERRED_SIZE)
 						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-				.addGroup(jPanel1Layout.createSequentialGroup().addComponent(jButtonLogout,
-						GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
-				.addGroup(jPanel1Layout.createSequentialGroup().addComponent(jLabelWelcome,
-						GroupLayout.DEFAULT_SIZE, 20, GroupLayout.PREFERRED_SIZE))
+				.addGroup(jPanel1Layout.createSequentialGroup().addComponent(jButtonLogout, GroupLayout.PREFERRED_SIZE,
+						20, GroupLayout.PREFERRED_SIZE))
+				.addGroup(jPanel1Layout.createSequentialGroup().addComponent(jLabelWelcome, GroupLayout.DEFAULT_SIZE,
+						20, GroupLayout.PREFERRED_SIZE))
 				.addGroup(jPanel1Layout.createSequentialGroup()
 						.addComponent(jLabelTitle, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
@@ -270,11 +270,11 @@ public class InputDataView extends JFrame {
 
 	private void jButtonHomeActionPerformed(ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
 		// TODO add your handling code here:
-		HomeView homeView = new HomeView();
+		HomeViewUser homeView = new HomeViewUser(idUsed, nameUsed);
 		homeView.setVisible(true);
 		this.setVisible(false);
 	}
-	
+
 	private void jButtonLogoutActionPerformed(ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
 		// TODO add your handling code here:
 		HomeView homeView = new HomeView();
@@ -288,16 +288,13 @@ public class InputDataView extends JFrame {
 			// chuyen man hinh
 			float height = Float.parseFloat(textField_Height.getText());
 			float weight = Float.parseFloat(textField_Weight.getText());
-			System.out.println("can nang la " + weight);
-			ResultView resultView = new ResultView();
+			ResultView resultView = new ResultView(idUsed);
 			resultView.height = height;
 			resultView.weight = weight;
 			resultView.setVisible(true);
 			resultView.TDEE = new MainController().getTDEE(level, sex, height, weight, age);
 			this.setVisible(false);
 			resultView.showResult();
-		} else {
-			System.out.println("chua nhap du gia tri");
 		}
 	}
 
@@ -314,9 +311,23 @@ public class InputDataView extends JFrame {
 	public boolean checkValidValue() {
 		if (textField_Weight.getText().equals("") || textField_Height.getText().equals("")
 				|| textField_Age.getText().equals("")) {
-			JOptionPane.showMessageDialog(this, "chua nhập đủ giá trị");
+			JOptionPane.showMessageDialog(this, "chưa nhập đủ giá trị");
 			return false;
 		}
+		String docao = textField_Height.getText();
+		String cannang = textField_Weight.getText();
+		String tuoi = textField_Age.getText();
+		String gioitinh = comboBox_Sex.getSelectedItem().toString();
+		String mucdold = comBoBox_level.getSelectedItem().toString();
+		
+		try {
+			System.out.println("idUsed: " + idUsed);
+			User.InsertUserIndex(idUsed, docao, cannang, tuoi, gioitinh, mucdold);
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(this, "nhập sai kiểu giá trị");
+			return false;
+		}
+		
 		return true;
 	}
 

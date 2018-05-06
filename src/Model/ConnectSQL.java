@@ -8,8 +8,6 @@ package Model;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-import java.sql.SQLException;
-import java.sql.Statement;
 
 public class ConnectSQL {
     public static Connection connectsql(){
@@ -18,12 +16,9 @@ public class ConnectSQL {
             Class.forName("com.mysql.jdbc.Driver");
 //          Create Connection variable in order to connect to database
             Connection conn = null;
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/cstt?useUnicode=yes&characterEncoding=UTF-8", "root", "");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hcstt", "root", "123456");
             System.out.println("Database in connected!");
             return conn;
-//            Statement st = conn.createStatement();
-//            st.executeUpdate("INSERT INTO test " + "VALUES ('1002', 'quangns', '')" );
-//            conn.close();
         }
         catch(Exception e) {
             System.out.print("Do not connect to DB - Error: " +e);
