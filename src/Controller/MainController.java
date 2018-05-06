@@ -101,6 +101,7 @@ public class MainController {
 		x = getgioitinh(gioitinh);
 		BMR = (float) (10 * cannang + 6.25 * chieucao - 5 * tuoi + x);
 		float TDEE = BMR * iLaodong;
+		TDEE = (float) (Math.round(TDEE * 100) / 100.0d);
 		return TDEE;// luong calo can cho hoat dong co the
 	}
 
