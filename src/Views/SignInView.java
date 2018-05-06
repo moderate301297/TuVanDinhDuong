@@ -170,7 +170,7 @@ public class SignInView extends JFrame {
 	private void jButtonContinueActionPerformed(ActionEvent evt) {// GEN-FIRST:event_jButton2ActionPerformed
 		// TODO add your handling code here:
 		if (checkValidValue()) {
-			HomeViewUser homeView = new HomeViewUser(id, ten);
+			HomeViewUser homeView = new HomeViewUser(id);
 			homeView.setVisible(true);
 			this.setVisible(false);
 		}

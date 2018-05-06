@@ -8,21 +8,10 @@ package Views;
 
 import Controller.MainController;
 import Data.Food;
-import Model.ConnectSQL;
 import Model.User;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.swing.*;
-import javax.swing.UIManager.LookAndFeelInfo;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,17 +19,12 @@ import java.awt.event.ActionListener;
 import javax.swing.table.DefaultTableModel;
 
 public class ResultMenuView extends JFrame {
+
 	ArrayList<ArrayList<Food>> arrayListFoodSang = new ArrayList<>();
 	MainController controller = new MainController();
 	public float[] CaloSang = new float[3];
 	public float[] CaloTrua = new float[3];
 	public float[] CaloToi = new float[3];
-	Vector vUnlike = new Vector(0);
-	private Object iUnlike = 0;
-	private Vector vUnlike1 = new Vector();
-	private Vector vUnlike2 = new Vector();
-	private Vector vUnlike3 = new Vector();
-	final int delta = 10;
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	private JButton jButton1;
 	private JButton jButton2;
@@ -65,9 +49,7 @@ public class ResultMenuView extends JFrame {
 	ArrayList<Food> resultFoodSang1, resultFoodSang2, resultFoodSang3;
 	ArrayList<Food> resultFoodTrua1, resultFoodTrua2, resultFoodTrua3;
 	ArrayList<Food> resultFoodToi1, resultFoodToi2, resultFoodToi3;
-	String tenmonan1, tenmonan2, tenmonan3;
-	String donvi1, donvi2, donvi3;
-	String tongcalo1, tongcalo2, tongcalo3;
+	Object[][] objectSang, objectTrua, objectToi;
 	float calo;
 	int sizeResultSang;
 	int sizeResultTrua;
@@ -84,6 +66,7 @@ public class ResultMenuView extends JFrame {
 
 	public void processDB(String idUsed) {
 		ArrayList<Float> arrayList = new ArrayList<>();
+		ArrayList<Integer> arrayListClick = new ArrayList<>();
 		ArrayList<String> arrayListMucTieu = new ArrayList<>();
 		try {
 			arrayListMucTieu = User.GetMucTieu(idUsed);
@@ -103,10 +86,6 @@ public class ResultMenuView extends JFrame {
 		calo = arrayList.get(0);
 		arrayListFoodSang = controller.getFoodTungBua(calo, 0, tablename);
 		resultFoodSang1 = arrayListFoodSang.get(0);
-		Food result1 = resultFoodSang1.get(0);
-		tenmonan1 = result1.getTenmon();
-		donvi1 = result1.getSoluong();
-		tongcalo1 = result1.getCalo();
 		resultFoodSang2 = arrayListFoodSang.get(1);
 		resultFoodSang3 = arrayListFoodSang.get(2);
 		sizeResultSang = resultFoodSang1.size() + resultFoodSang2.size() + resultFoodSang3.size();
@@ -115,10 +94,6 @@ public class ResultMenuView extends JFrame {
 		calo = arrayList.get(1);
 		arrayListFoodSang = controller.getFoodTungBua(calo, 1, tablename);
 		resultFoodTrua1 = arrayListFoodSang.get(0);
-		Food result2 = resultFoodSang1.get(0);
-		tenmonan1 = result2.getTenmon();
-		donvi1 = result2.getSoluong();
-		tongcalo1 = result2.getCalo();
 		resultFoodTrua2 = arrayListFoodSang.get(1);
 		resultFoodTrua3 = arrayListFoodSang.get(2);
 		sizeResultTrua = resultFoodTrua1.size() + resultFoodTrua2.size() + resultFoodTrua3.size();
@@ -127,13 +102,39 @@ public class ResultMenuView extends JFrame {
 		calo = arrayList.get(2);
 		arrayListFoodSang = controller.getFoodTungBua(calo, 2, tablename);
 		resultFoodToi1 = arrayListFoodSang.get(0);
-		Food result3 = resultFoodSang1.get(0);
-		tenmonan1 = result3.getTenmon();
-		donvi1 = result3.getSoluong();
-		tongcalo1 = result3.getCalo();
 		resultFoodToi2 = arrayListFoodSang.get(1);
 		resultFoodToi3 = arrayListFoodSang.get(2);
 		sizeResultToi = resultFoodToi1.size() + resultFoodToi2.size() + resultFoodToi3.size();
+
+		try {
+			arrayListClick = User.GetUserClick(idUsed);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		if (arrayListClick.size() == 0) {
+			// bua sang
+			Food result1 = resultFoodSang1.get(0);
+			objectSang[0][0] = result1.getTenmon();
+			objectSang[0][1] = result1.getSoluong();
+			objectSang[0][2] = result1.getCalo();
+
+			// bua trua
+			Food result2 = resultFoodSang1.get(0);
+			objectSang[0][0] = result2.getTenmon();
+			objectSang[0][1] = result2.getSoluong();
+			objectSang[0][2] = result2.getCalo();
+
+			// bua toi
+			Food result3 = resultFoodSang1.get(0);
+			objectSang[0][0] = result3.getTenmon();
+			objectSang[0][1] = result3.getSoluong();
+			objectSang[0][2] = result3.getCalo();
+		} else {
+			DoiMonSang(arrayListClick.get(0));
+			DoiMonTrua(arrayListClick.get(1));
+			DoiMonToi(arrayListClick.get(2));
+		}
 
 	}
 
@@ -168,9 +169,7 @@ public class ResultMenuView extends JFrame {
 
 		jLabel5.setText("Bữa sáng");
 
-		jTable1.setModel(new DefaultTableModel(new Object[][] { { tenmonan1, donvi1, tongcalo1 } },
-				new String[] { "Tên món", "Số lượng", "Calo" }) {
-		});
+		jTable1.setModel(new DefaultTableModel(objectSang, new String[] { "Tên món", "Số lượng", "Calo" }));
 		jScrollPane1.setViewportView(jTable1);
 
 		jButton1.setFont(new Font("Times New Roman", 1, 12)); // NOI18N
@@ -183,14 +182,7 @@ public class ResultMenuView extends JFrame {
 
 		jLabel6.setText("Bữa trưa");
 
-		jTable2.setModel(new DefaultTableModel(new Object[][] { { tenmonan1, donvi1, tongcalo1 } },
-				new String[] { "Id", "Tên món", "Số lượng" }) {
-			Class[] types = new Class[] { java.lang.String.class, java.lang.String.class, java.lang.String.class };
-
-			public Class getColumnClass(int columnIndex) {
-				return types[columnIndex];
-			}
-		});
+		jTable2.setModel(new DefaultTableModel(objectTrua, new String[] { "Id", "Tên món", "Số lượng" }));
 		jScrollPane2.setViewportView(jTable2);
 
 		jButton2.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
@@ -203,14 +195,7 @@ public class ResultMenuView extends JFrame {
 
 		jLabel7.setText("Bữa tối");
 
-		jTable3.setModel(new DefaultTableModel(new Object[][] { { tenmonan1, donvi1, tongcalo1 } },
-				new String[] { "Id", "Tên món", "Số lượng" }) {
-			Class[] types = new Class[] { java.lang.String.class, java.lang.String.class, java.lang.String.class };
-
-			public Class getColumnClass(int columnIndex) {
-				return types[columnIndex];
-			}
-		});
+		jTable3.setModel(new DefaultTableModel(objectToi, new String[] { "Id", "Tên món", "Số lượng" }));
 		jScrollPane3.setViewportView(jTable3);
 
 		jButton3.setFont(new Font("Times New Roman", 1, 12)); // NOI18N
@@ -323,133 +308,133 @@ public class ResultMenuView extends JFrame {
 		if (count == sizeResultSang) {
 			clickedSang = 0;
 			Food result1 = resultFoodSang1.get(clickedSang);
-			tenmonan1 = result1.getTenmon();
-			donvi1 = result1.getSoluong();
-			tongcalo1 = result1.getCalo();
+			objectSang[0][0] = result1.getTenmon();
+			objectSang[0][1] = result1.getSoluong();
+			objectSang[0][2] = result1.getCalo();
 		}
 		if (count < resultFoodSang1.size()) {
-			Food result1 = resultFoodSang1.get(count);
-			tenmonan1 = result1.getTenmon();
-			donvi1 = result1.getSoluong();
-			tongcalo1 = result1.getCalo();
+			Food result1 = resultFoodSang1.get(clickedSang);
+			objectSang[0][0] = result1.getTenmon();
+			objectSang[0][1] = result1.getSoluong();
+			objectSang[0][2] = result1.getCalo();
 		}
 		if (count < resultFoodSang2.size() && count >= resultFoodSang1.size()) {
 			Food result1 = resultFoodSang2.get(count);
-			tenmonan1 = result1.getTenmon();
-			donvi1 = result1.getSoluong();
-			tongcalo1 = result1.getCalo();
+			objectSang[0][0] = result1.getTenmon();
+			objectSang[0][1] = result1.getSoluong();
+			objectSang[0][2] = result1.getCalo();
 			count = count + 1;
 			Food result2 = resultFoodSang2.get(count);
-			tenmonan2 = result2.getTenmon();
-			donvi2 = result2.getSoluong();
-			tongcalo2 = result2.getCalo();
+			objectSang[1][0] = result2.getTenmon();
+			objectSang[1][1] = result2.getSoluong();
+			objectSang[1][2] = result2.getCalo();
 		}
 		if (count < resultFoodSang3.size() && count >= resultFoodSang2.size()) {
 			Food result1 = resultFoodSang2.get(count);
-			tenmonan1 = result1.getTenmon();
-			donvi1 = result1.getSoluong();
-			tongcalo1 = result1.getCalo();
+			objectSang[0][0] = result1.getTenmon();
+			objectSang[0][1] = result1.getSoluong();
+			objectSang[0][2] = result1.getCalo();
 			count = count + 1;
 			Food result2 = resultFoodSang2.get(count);
-			tenmonan2 = result2.getTenmon();
-			donvi2 = result2.getSoluong();
-			tongcalo2 = result2.getCalo();
+			objectSang[1][0] = result2.getTenmon();
+			objectSang[1][1] = result2.getSoluong();
+			objectSang[1][2] = result2.getCalo();
 			count = count + 1;
 			Food result3 = resultFoodSang2.get(count);
-			tenmonan3 = result3.getTenmon();
-			donvi3 = result3.getSoluong();
-			tongcalo3 = result3.getCalo();
+			objectSang[2][0] = result3.getTenmon();
+			objectSang[2][1] = result3.getSoluong();
+			objectSang[2][2] = result3.getCalo();
 		}
 		// resetTable();
 	}
-	
+
 	public void DoiMonTrua(int count) {
 		// Xoá bảng
-		ClearTable(1);
+		ClearTable(2);
 		if (count == sizeResultTrua) {
 			clickedTrua = 0;
 			Food result1 = resultFoodTrua1.get(clickedTrua);
-			tenmonan1 = result1.getTenmon();
-			donvi1 = result1.getSoluong();
-			tongcalo1 = result1.getCalo();
+			objectTrua[0][0] = result1.getTenmon();
+			objectTrua[0][1] = result1.getSoluong();
+			objectTrua[0][2] = result1.getCalo();
 		}
 		if (count < resultFoodTrua1.size()) {
 			Food result1 = resultFoodTrua1.get(count);
-			tenmonan1 = result1.getTenmon();
-			donvi1 = result1.getSoluong();
-			tongcalo1 = result1.getCalo();
+			objectTrua[0][0] = result1.getTenmon();
+			objectTrua[0][1] = result1.getSoluong();
+			objectTrua[0][2] = result1.getCalo();
 		}
 		if (count < resultFoodTrua2.size() && count >= resultFoodTrua1.size()) {
 			Food result1 = resultFoodTrua2.get(count);
-			tenmonan1 = result1.getTenmon();
-			donvi1 = result1.getSoluong();
-			tongcalo1 = result1.getCalo();
+			objectTrua[0][0] = result1.getTenmon();
+			objectTrua[0][1] = result1.getSoluong();
+			objectTrua[0][2] = result1.getCalo();
 			count = count + 1;
 			Food result2 = resultFoodTrua2.get(count);
-			tenmonan2 = result2.getTenmon();
-			donvi2 = result2.getSoluong();
-			tongcalo2 = result2.getCalo();
+			objectTrua[1][0] = result2.getTenmon();
+			objectTrua[1][1] = result2.getSoluong();
+			objectTrua[1][2] = result2.getCalo();
 		}
 		if (count < resultFoodTrua3.size() && count >= resultFoodTrua2.size()) {
 			Food result1 = resultFoodTrua3.get(count);
-			tenmonan1 = result1.getTenmon();
-			donvi1 = result1.getSoluong();
-			tongcalo1 = result1.getCalo();
+			objectTrua[0][0] = result1.getTenmon();
+			objectTrua[0][1] = result1.getSoluong();
+			objectTrua[0][2] = result1.getCalo();
 			count = count + 1;
 			Food result2 = resultFoodTrua3.get(count);
-			tenmonan2 = result2.getTenmon();
-			donvi2 = result2.getSoluong();
-			tongcalo2 = result2.getCalo();
+			objectTrua[1][0] = result2.getTenmon();
+			objectTrua[1][1] = result2.getSoluong();
+			objectTrua[1][2] = result2.getCalo();
 			count = count + 1;
 			Food result3 = resultFoodTrua3.get(count);
-			tenmonan3 = result3.getTenmon();
-			donvi3 = result3.getSoluong();
-			tongcalo3 = result3.getCalo();
+			objectTrua[2][0] = result3.getTenmon();
+			objectTrua[2][1] = result3.getSoluong();
+			objectTrua[2][2] = result3.getCalo();
 		}
 	}
-	
+
 	public void DoiMonToi(int count) {
 		// Xoá bảng
-		ClearTable(1);
+		ClearTable(3);
 		if (count == sizeResultToi) {
 			clickedToi = 0;
 			Food result1 = resultFoodToi1.get(clickedToi);
-			tenmonan1 = result1.getTenmon();
-			donvi1 = result1.getSoluong();
-			tongcalo1 = result1.getCalo();
+			objectToi[0][0] = result1.getTenmon();
+			objectToi[0][1] = result1.getSoluong();
+			objectToi[0][2] = result1.getCalo();
 		}
 		if (count < resultFoodToi1.size()) {
 			Food result1 = resultFoodToi1.get(count);
-			tenmonan1 = result1.getTenmon();
-			donvi1 = result1.getSoluong();
-			tongcalo1 = result1.getCalo();
+			objectToi[0][0] = result1.getTenmon();
+			objectToi[0][1] = result1.getSoluong();
+			objectToi[0][2] = result1.getCalo();
 		}
 		if (count < resultFoodToi2.size() && count >= resultFoodToi1.size()) {
 			Food result1 = resultFoodToi2.get(count);
-			tenmonan1 = result1.getTenmon();
-			donvi1 = result1.getSoluong();
-			tongcalo1 = result1.getCalo();
+			objectToi[0][0] = result1.getTenmon();
+			objectToi[0][1] = result1.getSoluong();
+			objectToi[0][2] = result1.getCalo();
 			count = count + 1;
 			Food result2 = resultFoodToi2.get(count);
-			tenmonan2 = result2.getTenmon();
-			donvi2 = result2.getSoluong();
-			tongcalo2 = result2.getCalo();
+			objectToi[1][0] = result2.getTenmon();
+			objectToi[1][1] = result2.getSoluong();
+			objectToi[1][2] = result2.getCalo();
 		}
 		if (count < resultFoodToi3.size() && count >= resultFoodToi2.size()) {
 			Food result1 = resultFoodToi3.get(count);
-			tenmonan1 = result1.getTenmon();
-			donvi1 = result1.getSoluong();
-			tongcalo1 = result1.getCalo();
+			objectToi[0][0] = result1.getTenmon();
+			objectToi[0][1] = result1.getSoluong();
+			objectToi[0][2] = result1.getCalo();
 			count = count + 1;
 			Food result2 = resultFoodToi3.get(count);
-			tenmonan2 = result2.getTenmon();
-			donvi2 = result2.getSoluong();
-			tongcalo2 = result2.getCalo();
+			objectToi[1][0] = result2.getTenmon();
+			objectToi[1][1] = result2.getSoluong();
+			objectToi[1][2] = result2.getCalo();
 			count = count + 1;
 			Food result3 = resultFoodToi3.get(count);
-			tenmonan3 = result3.getTenmon();
-			donvi3 = result3.getSoluong();
-			tongcalo3 = result3.getCalo();
+			objectToi[2][0] = result3.getTenmon();
+			objectToi[2][1] = result3.getSoluong();
+			objectToi[2][2] = result3.getCalo();
 		}
 	}
 
@@ -492,13 +477,17 @@ public class ResultMenuView extends JFrame {
 
 	private void jButton3ActionPerformed(ActionEvent evt) {// GEN-FIRST:event_jButton3ActionPerformed
 		clickedToi++;
-		DoiMonTrua(clickedToi);
+		DoiMonToi(clickedToi);
 	}
 
 	private void jButton4ActionPerformed(ActionEvent evt) {// GEN-FIRST:event_jButton4ActionPerformed
-		// TODO add your handling code here:
-		HomeView homeView = new HomeView();
-		homeView.setVisible(true);
+		try {
+			User.InsertUserClick(idUsed, clickedSang, clickedTrua, clickedToi);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		HomeViewUser homeViewUser = new HomeViewUser(idUsed);
+		homeViewUser.setVisible(true);
 		this.setVisible(false);
-	}// GEN-LAST:event_jButton4ActionPerformed
+	}
 }

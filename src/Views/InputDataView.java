@@ -270,7 +270,7 @@ public class InputDataView extends JFrame {
 
 	private void jButtonHomeActionPerformed(ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
 		// TODO add your handling code here:
-		HomeViewUser homeView = new HomeViewUser(idUsed, nameUsed);
+		HomeViewUser homeView = new HomeViewUser(idUsed);
 		homeView.setVisible(true);
 		this.setVisible(false);
 	}

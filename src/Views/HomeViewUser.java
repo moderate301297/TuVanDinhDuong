@@ -3,10 +3,13 @@ package Views;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.*;
+
+import Model.User;
 
 public class HomeViewUser extends JFrame {
 
@@ -14,13 +17,18 @@ public class HomeViewUser extends JFrame {
 	private JButton jButtonHobby, jButtonAdvisory, jButtonMenu, jButtonExit, jButtonLogOut;
 	private JLabel jLabelTitle, jLabelTitleUser;
 	private JPanel jPanelHome;
-	public String idUsed, nameUsed;
+	public String idUsed;
+	String name = null;
 	// End of variables declaration//GEN-END:variables
 
-	public HomeViewUser(String id, String ten) {
+	public HomeViewUser(String id) {
 		idUsed = id;
-		nameUsed = ten;
-		initComponents(ten);
+		try {
+			name = User.getUserName(idUsed);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		initComponents(name);
 	}
 	private void initComponents(String ten) {
 
@@ -145,7 +153,7 @@ public class HomeViewUser extends JFrame {
 
 	private void jButtonAdvisoryActionPerformed(ActionEvent evt) {
 		// TODO add your handling code here:
-		InputDataView inputDataView = new InputDataView(idUsed,nameUsed);
+		InputDataView inputDataView = new InputDataView(idUsed,name);
 		inputDataView.setVisible(true);
 		this.setVisible(false);
 	}// GEN-LAST:event_jButton2ActionPerformed
