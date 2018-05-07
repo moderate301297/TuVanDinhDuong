@@ -136,17 +136,18 @@ public class User {
 		}
 	}
 
-	public static void UpdateFavorite(String user_id, String sothich) throws SQLException {
+	public static void UpdateFavorite(String user_id, String sothich, String buaan) throws SQLException {
 		try (Connection conn = ConnectSQL.connectsql()) {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 			Date date = new Date();
 			String dateNow = dateFormat.format(date);
 			String updated_at = dateNow;
-			String query = "UPDATE user_index SET so_thich = ?, updated_at = ?" + " WHERE user_id = ?";
+			String query = "UPDATE user_favorite SET so_thich = ?, bua_an = ?, updated_at = ?" + " WHERE user_id = ?";
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setString(1, sothich);
-			ps.setString(2, updated_at);
-			ps.setString(3, user_id);
+			ps.setString(2, buaan);
+			ps.setString(3, updated_at);
+			ps.setString(4, user_id);
 			ps.executeUpdate();
 			conn.close();
 		} catch (Exception e) {
@@ -178,12 +179,13 @@ public class User {
 		return null;
 	}
 
-	public static String GetFavorite(String user_id) throws SQLException {
+	public static String GetFavorite(String user_id, String buaan) throws SQLException {
 		String so_thich = null;
 		try (Connection conn = ConnectSQL.connectsql()) {
-			String query = "SELECT so_thich FROM user_index WHERE user_id = ?";
+			String query = "SELECT so_thich FROM user_favorite WHERE user_id = ? AND bua_an = ?";
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setString(1, user_id);
+			ps.setString(2, buaan);
 			ResultSet rs;
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -253,7 +255,7 @@ public class User {
 			}
 			if (idNew == null) {
 				String query1 = "INSERT INTO user_click(user_id, clicked_sang, clicked_trua, clicked_toi)"
-						+ " VALUES(?,?,?,?,?,?,?,?)";
+						+ " VALUES(?,?,?,?)";
 				PreparedStatement ps1 = conn.prepareStatement(query1);
 				ps1.setString(1, user_id);
 				ps1.setInt(2, clickedSang);

@@ -5,6 +5,7 @@
  */
 package Model;
 
+import Data.Calo;
 import Data.Food;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,17 +15,22 @@ import java.util.ArrayList;
 
 public class QueryFood {
 
-	public static ArrayList<Float> SearchDsFood(String tablemonan, String buaan) throws SQLException {
+	public static ArrayList<Calo> SearchDsFood(String tablemonan, String buaan, float calo) throws SQLException {
 		try (Connection conn = ConnectSQL.connectsql()) {
-			ArrayList<Float> dsfood = new ArrayList<>();
-			String query = "SELECT tong_calo FROM " + tablemonan + " WHERE bua_an = ?";
+			ArrayList<Calo> dsfood = new ArrayList<>();
+			String query = "SELECT id,tong_calo FROM " + tablemonan + " WHERE bua_an = ? AND tong_calo < ?";
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setString(1, buaan);
+			ps.setFloat(2, calo + 30);
 			ResultSet rs;
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				float tongcalo = rs.getFloat("tong_calo");
-				dsfood.add(tongcalo);
+				Calo dscalo = new Calo();
+				String tongcalo = rs.getString("tong_calo");
+				String id = rs.getString("id");
+				dscalo.setId(id);
+				dscalo.setCalo(tongcalo);
+				dsfood.add(dscalo);
 			}
 			conn.close();
 			return dsfood;
@@ -34,14 +40,14 @@ public class QueryFood {
 		return null;
 	}
 
-	public static ArrayList<Food> SearchFood(ArrayList<Float> calo, String tablemonan, String buaan)
+	public static ArrayList<Food> SearchFood(ArrayList<String> id, String tablemonan, String buaan)
 			throws SQLException {
 		try (Connection conn = ConnectSQL.connectsql()) {
 			ArrayList<Food> array = new ArrayList<>();
-			for (int i = 0; i < calo.size(); i++) {
-				String query = "SELECT ten_mon_an, don_vi, tong_calo FROM " + tablemonan + " WHERE tong_calo = ?";
+			for (int i = 0; i < id.size(); i++) {
+				String query = "SELECT ten_mon_an, don_vi, tong_calo FROM " + tablemonan + " WHERE id = ?";
 				PreparedStatement ps = conn.prepareStatement(query);
-				ps.setFloat(1, calo.get(i));
+				ps.setString(1, id.get(i));
 				ResultSet rs;
 				rs = ps.executeQuery();
 				while (rs.next()) {
