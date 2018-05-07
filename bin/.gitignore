@@ -1,6 +1,4 @@
-/Controller/
-/Data/
-/Model/
-/Resource/
-/Util/
 /Views/
+/Controller/
+/Model/
+/Data/

@@ -11,6 +11,7 @@ public class AllFood {
     private String soluong;
     private String calo;
     private String buaan;
+    private String nhom;
     
     public String getId() {
         return id;
@@ -50,5 +51,12 @@ public class AllFood {
 
     public void setBuaAn(String buaan) {
         this.buaan = buaan;
+    }
+    public String getNhom() {
+        return nhom;
+    }
+
+    public void setNhom(String nhom) {
+        this.nhom = nhom;
     }
 }

@@ -245,7 +245,35 @@ public class ResultMenuView extends JFrame {
 					objectSang[2][2] = result111.getCalo();
 				}
 			} else {
-				DoiMonSang(arrayListClick.get(0));
+				// bua sang
+				if (resultFoodSang1.size() != 0 && arrayListClick.get(0) <= resultFoodSang1.size()) {
+					Food result1 = resultFoodSang1.get(arrayListClick.get(0));
+					objectSang[0][0] = result1.getTenmon();
+					objectSang[0][1] = result1.getSoluong();
+					objectSang[0][2] = result1.getCalo();
+				} else if (resultFoodSang2.size() != 0 && arrayListClick.get(0) <= resultFoodSang2.size()) {
+					Food result1 = resultFoodSang2.get(arrayListClick.get(0) - 1);
+					Food result11 = resultFoodSang2.get(arrayListClick.get(0));/////////
+					objectSang[0][0] = result1.getTenmon();
+					objectSang[0][1] = result1.getSoluong();
+					objectSang[0][2] = result1.getCalo();
+					objectSang[1][0] = result11.getTenmon();
+					objectSang[1][1] = result11.getSoluong();
+					objectSang[1][2] = result11.getCalo();
+				} else if (resultFoodSang3.size() != 0 && arrayListClick.get(0) <= resultFoodSang3.size()) {
+					Food result1 = resultFoodSang3.get(arrayListClick.get(0) - 2);
+					Food result11 = resultFoodSang3.get(arrayListClick.get(0) - 1);
+					Food result111 = resultFoodSang3.get(arrayListClick.get(0));
+					objectSang[0][0] = result1.getTenmon();
+					objectSang[0][1] = result1.getSoluong();
+					objectSang[0][2] = result1.getCalo();
+					objectSang[1][0] = result11.getTenmon();
+					objectSang[1][1] = result11.getSoluong();
+					objectSang[1][2] = result11.getCalo();
+					objectSang[2][0] = result111.getTenmon();
+					objectSang[2][1] = result111.getSoluong();
+					objectSang[2][2] = result111.getCalo();
+				}
 			}
 			if (arrayListClick.get(1) == 0) {
 				// bua trua
@@ -278,7 +306,34 @@ public class ResultMenuView extends JFrame {
 					objectTrua[2][2] = result111.getCalo();
 				}
 			} else {
-				DoiMonTrua(arrayListClick.get(1));
+				if (resultFoodTrua1.size() != 0 && arrayListClick.get(1) <= resultFoodTrua1.size()) {
+					Food result1 = resultFoodTrua1.get(arrayListClick.get(1));
+					objectTrua[0][0] = result1.getTenmon();
+					objectTrua[0][1] = result1.getSoluong();
+					objectTrua[0][2] = result1.getCalo();
+				} else if (resultFoodTrua2.size() != 0 && arrayListClick.get(1) <= resultFoodTrua2.size()) {
+					Food result1 = resultFoodTrua2.get(arrayListClick.get(1) - 1);
+					Food result11 = resultFoodTrua2.get(arrayListClick.get(1));
+					objectTrua[0][0] = result1.getTenmon();
+					objectTrua[0][1] = result1.getSoluong();
+					objectTrua[0][2] = result1.getCalo();
+					objectTrua[1][0] = result11.getTenmon();
+					objectTrua[1][1] = result11.getSoluong();
+					objectTrua[1][2] = result11.getCalo();
+				} else if (resultFoodTrua3.size() != 0 && arrayListClick.get(1) <= resultFoodTrua3.size()) {
+					Food result1 = resultFoodTrua3.get(arrayListClick.get(1) - 2);
+					Food result11 = resultFoodTrua3.get(arrayListClick.get(1) - 1);
+					Food result111 = resultFoodTrua3.get(arrayListClick.get(1));
+					objectTrua[0][0] = result1.getTenmon();
+					objectTrua[0][1] = result1.getSoluong();
+					objectTrua[0][2] = result1.getCalo();
+					objectTrua[1][0] = result11.getTenmon();
+					objectTrua[1][1] = result11.getSoluong();
+					objectTrua[1][2] = result11.getCalo();
+					objectTrua[2][0] = result111.getTenmon();
+					objectTrua[2][1] = result111.getSoluong();
+					objectTrua[2][2] = result111.getCalo();
+				}
 			}
 
 			if (arrayListClick.get(2) == 0) {
@@ -312,7 +367,35 @@ public class ResultMenuView extends JFrame {
 					objectToi[2][2] = result111.getCalo();
 				}
 			} else {
-				DoiMonToi(arrayListClick.get(2));
+				// bua toi
+				if (resultFoodToi1.size() != 0 && arrayListClick.get(2) <= resultFoodToi1.size()) {
+					Food result1 = resultFoodToi1.get(arrayListClick.get(2));
+					objectToi[0][0] = result1.getTenmon();
+					objectToi[0][1] = result1.getSoluong();
+					objectToi[0][2] = result1.getCalo();
+				} else if (resultFoodToi2.size() != 0 && arrayListClick.get(2) <= resultFoodToi2.size()) {
+					Food result1 = resultFoodToi2.get(arrayListClick.get(2) - 1);
+					Food result11 = resultFoodToi2.get(arrayListClick.get(2));
+					objectToi[0][0] = result1.getTenmon();
+					objectToi[0][1] = result1.getSoluong();
+					objectToi[0][2] = result1.getCalo();
+					objectToi[1][0] = result11.getTenmon();
+					objectToi[1][1] = result11.getSoluong();
+					objectToi[1][2] = result11.getCalo();
+				} else if (resultFoodToi3.size() != 0 && arrayListClick.get(2) <= resultFoodToi3.size()) {
+					Food result1 = resultFoodToi3.get(arrayListClick.get(2) - 2);
+					Food result11 = resultFoodToi3.get(arrayListClick.get(2) - 1);
+					Food result111 = resultFoodToi3.get(arrayListClick.get(2));
+					objectToi[0][0] = result1.getTenmon();
+					objectToi[0][1] = result1.getSoluong();
+					objectToi[0][2] = result1.getCalo();
+					objectToi[1][0] = result11.getTenmon();
+					objectToi[1][1] = result11.getSoluong();
+					objectToi[1][2] = result11.getCalo();
+					objectToi[2][0] = result111.getTenmon();
+					objectToi[2][1] = result111.getSoluong();
+					objectToi[2][2] = result111.getCalo();
+				}
 			}
 		}
 	}

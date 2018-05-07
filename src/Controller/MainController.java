@@ -155,15 +155,14 @@ public class MainController {
 	public ArrayList<ArrayList<Food>> getFoodTungBua(float calo, int i, String idUsed) {
 		ArrayList<ArrayList<Food>> arrayList = new ArrayList<>();
 		if (i == 0) {
-			String tablename = GetTableFavorite(idUsed, "Bữa Sáng");
-			System.out.println("tablename: " + tablename);
-			arrayList = GetFood(calo, tablename, "bua sang");
+			String so_thich = GetTableFavorite(idUsed, "Bữa Sáng");
+			arrayList = GetFood(calo, "table_mon_an", "bua sang",so_thich);
 		} else if (i == 1) {
-			String tablename = GetTableFavorite(idUsed, "Bữa Trưa");
-			arrayList = GetFood(calo, tablename, "bua trua");
+			String so_thich = GetTableFavorite(idUsed, "Bữa Trưa");
+			arrayList = GetFood(calo, "table_mon_an", "bua trua",so_thich);
 		} else {
-			String tablename = GetTableFavorite(idUsed, "Bữa Tối");
-			arrayList = GetFood(calo, tablename, "bua toi");
+			String so_thich = GetTableFavorite(idUsed, "Bữa Tối");
+			arrayList = GetFood(calo, "table_mon_an", "bua toi",so_thich);
 		}
 		return arrayList;
 	}
@@ -171,22 +170,15 @@ public class MainController {
 	public String GetTableFavorite(String user_id, String buaan) {
 		String so_thich = null;
 		try {
-			so_thich = User.GetFavorite(user_id,buaan);
+			so_thich = User.GetFavorite(user_id, buaan);
 			System.out.println("So thich" + so_thich);
 		} catch (SQLException e) {
 			System.out.println("error: " + e);
 		}
-		if (so_thich == "Không" || so_thich == null) {
-			so_thich = "table_mon_an";
-		} else if (so_thich.equals("Món ăn huế")) {
-			so_thich = "table_mon_an_hue";
-		} else if (so_thich.equals("Món ăn hà nội")) {
-			so_thich = "table_mon_an_ha_noi";
-		}
 		return so_thich;
 	}
 
-	private ArrayList<ArrayList<Food>> GetFood(float calo, String tablemonan, String buaan) {
+	private ArrayList<ArrayList<Food>> GetFood(float calo, String tablemonan, String buaan, String so_thich) {
 		ArrayList<Calo> dsfood = new ArrayList<>();
 		ArrayList<String> dsfoodnew1 = new ArrayList<>();
 		ArrayList<String> dsfoodnew2 = new ArrayList<>();
@@ -195,13 +187,21 @@ public class MainController {
 		ArrayList<Food> result2 = new ArrayList<>();
 		ArrayList<Food> result3 = new ArrayList<>();
 		ArrayList<ArrayList<Food>> result = new ArrayList<>();
-		try {
-			dsfood = QueryFood.SearchDsFood(tablemonan, buaan, calo);// all food
-			System.out.println("dsfood: " + dsfood.size());
-		} catch (SQLException e) {
-			System.out.println("error: " + e);
+		if (so_thich == "Không" || so_thich == null) {
+			try {
+				dsfood = QueryFood.SearchDsFood(tablemonan, buaan, calo);// all food
+				System.out.println("dsfood: " + dsfood.size());
+			} catch (SQLException e) {
+				System.out.println("error: " + e);
+			}
+		} else {
+			try {
+				dsfood = QueryFood.SearchDsFoodToFavorite(tablemonan, buaan, calo,so_thich);// all food
+				System.out.println("dsfood: " + dsfood.size());
+			} catch (SQLException e) {
+				System.out.println("error: " + e);
+			}
 		}
-
 		// thuc don 1 mon
 		for (int i = 0; i < dsfood.size(); i++) {
 			float a = Float.parseFloat(dsfood.get(i).getCalo()) - calo;
@@ -216,12 +216,13 @@ public class MainController {
 		} catch (SQLException e) {
 			System.out.println("error: " + e);
 		}
-		
-		if (dsfood.size() >= 2 ) {
+
+		if (dsfood.size() >= 2) {
 			// thuc don 2 mon
 			for (int i = 0; i < dsfood.size(); i++) {
 				for (int j = i + 1; j < dsfood.size(); j++) {
-					float a = Float.parseFloat(dsfood.get(i).getCalo()) + Float.parseFloat(dsfood.get(j).getCalo()) - calo;
+					float a = Float.parseFloat(dsfood.get(i).getCalo()) + Float.parseFloat(dsfood.get(j).getCalo())
+							- calo;
 					a = Math.abs(a);
 					if (a < 30) {
 						dsfoodnew2.add(dsfood.get(i).getId());
@@ -236,13 +237,14 @@ public class MainController {
 				System.out.println("error: " + e);
 			}
 		}
-		
-		if (dsfood.size() >= 3 ) {
+
+		if (dsfood.size() >= 3) {
 			// thuc don 3 mon
 			for (int i = 0; i < dsfood.size(); i++) {
 				for (int j = i + 1; j < dsfood.size(); j++) {
 					for (int k = j + 1; k < dsfood.size(); k++) {
-						float a = Float.parseFloat(dsfood.get(i).getCalo()) + Float.parseFloat(dsfood.get(j).getCalo()) + Float.parseFloat(dsfood.get(k).getCalo()) - calo;
+						float a = Float.parseFloat(dsfood.get(i).getCalo()) + Float.parseFloat(dsfood.get(j).getCalo())
+								+ Float.parseFloat(dsfood.get(k).getCalo()) - calo;
 						a = Math.abs(a);
 						if (a < 30) {
 							dsfoodnew3.add(dsfood.get(i).getId());
@@ -273,7 +275,7 @@ public class MainController {
 		}
 		return arrayList;
 	}
-	
+
 	public static ArrayList<AllFood> GetAllFood() {
 		ArrayList<AllFood> arrayList = null;
 		try {

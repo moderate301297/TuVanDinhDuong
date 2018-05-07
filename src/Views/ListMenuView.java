@@ -5,7 +5,6 @@
  */
 package Views;
 
-import Controller.ControlFood;
 import Controller.MainController;
 import Data.AllFood;
 
@@ -45,7 +44,8 @@ public class ListMenuView extends javax.swing.JFrame {
     		String soluong = food.getSoluong();
     		String tongcalo = food.getCalo();
     		String buaan = food.getBuaAn();
-    		ShowList(id, tenmon, soluong, tongcalo, buaan);
+    		String nhom = food.getNhom();
+    		ShowList(id, tenmon, soluong, tongcalo, buaan, nhom);
     	}
     }
 
@@ -70,7 +70,7 @@ public class ListMenuView extends javax.swing.JFrame {
             new Object [][] {
             },
             new String [] {
-                "Id", "Tên món ăn", "Số lượng", "Tổng Calo", "Bữa Ăn"
+                "Id", "Tên món ăn", "Số lượng", "Tổng Calo", "Bữa Ăn", "Nhóm"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -159,9 +159,9 @@ public class ListMenuView extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 
-    public void ShowList(String id, String tenmon, String soluong, String tongcalo, String buaan) {
+    public void ShowList(String id, String tenmon, String soluong, String tongcalo, String buaan, String nhom) {
         try {
-            String[] rowshow = {id, tenmon, soluong, tongcalo, buaan};
+            String[] rowshow = {id, tenmon, soluong, tongcalo, buaan,nhom};
             row = rowshow;
             DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
             model.addRow(row);
