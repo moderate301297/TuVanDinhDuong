@@ -24,10 +24,10 @@ DROP TABLE IF EXISTS `favorite_user`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `favorite_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `so_thich` varchar(45) NOT NULL,
-  `created_at` varchar(45) NOT NULL,
+  `so_thich` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`,`so_thich`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +36,7 @@ CREATE TABLE `favorite_user` (
 
 LOCK TABLES `favorite_user` WRITE;
 /*!40000 ALTER TABLE `favorite_user` DISABLE KEYS */;
-INSERT INTO `favorite_user` VALUES (1,'mon an hue','2018/05/05');
+INSERT INTO `favorite_user` VALUES (1,'Không','2018/05/05'),(2,'Món ăn huế','2018/05/08'),(3,'Món ăn hà nội','2018/05/08');
 /*!40000 ALTER TABLE `favorite_user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-05 19:41:21
+-- Dump completed on 2018-05-07 16:53:44

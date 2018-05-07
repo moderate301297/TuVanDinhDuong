@@ -16,29 +16,38 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `users`
+-- Table structure for table `user_index`
 --
 
-DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `user_index`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `users` (
+CREATE TABLE `user_index` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ten` varchar(45) NOT NULL,
-  `ten_dang_nhap` varchar(45) NOT NULL,
-  `mat_khau` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`,`ten_dang_nhap`,`mat_khau`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `user_id` int(11) NOT NULL,
+  `do_cao` int(5) NOT NULL,
+  `can_nang` int(5) NOT NULL,
+  `tuoi` int(3) NOT NULL,
+  `gioi_tinh` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `muc_do_lao_dong` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
+  `muc_tieu` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `select_value` int(11) DEFAULT NULL,
+  `index_value` int(11) DEFAULT NULL,
+  `TDEE` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `updated_at` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `users`
+-- Dumping data for table `user_index`
 --
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'ABC','lc','12345');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+LOCK TABLES `user_index` WRITE;
+/*!40000 ALTER TABLE `user_index` DISABLE KEYS */;
+INSERT INTO `user_index` VALUES (1,1,165,48,22,'Nam','Trung bình','tang 2 can',0,2,'2350.19',NULL,'2018/05/06');
+/*!40000 ALTER TABLE `user_index` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-05 19:41:21
+-- Dump completed on 2018-05-07 16:53:44
