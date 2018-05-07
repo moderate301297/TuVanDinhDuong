@@ -234,7 +234,7 @@ public class User {
 	}
 
 	public static ArrayList<Integer> GetUserClick(String user_id) throws SQLException {
-		ArrayList<Integer> arrayList = new ArrayList<>();
+		ArrayList<Integer> arrayList = null;
 		try (Connection conn = ConnectSQL.connectsql()) {
 			String query = "SELECT clicked_sang,clicked_trua,clicked_toi FROM user_click WHERE user_id = ?";
 			PreparedStatement ps = conn.prepareStatement(query);

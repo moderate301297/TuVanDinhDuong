@@ -123,7 +123,7 @@ public class ResultMenuView extends JFrame {
 			e.printStackTrace();
 		}
 
-		if (arrayListClick.get(0) == 0) {
+		if (arrayListClick == null) {
 			// bua sang
 			if (resultFoodSang1.size() != 0) {
 				Food result1 = resultFoodSang1.get(0);
@@ -139,7 +139,7 @@ public class ResultMenuView extends JFrame {
 				objectSang[1][0] = result11.getTenmon();
 				objectSang[1][1] = result11.getSoluong();
 				objectSang[1][2] = result11.getCalo();
-			} else {
+			} else if (resultFoodSang3.size() != 0) {
 				Food result1 = resultFoodSang3.get(0);
 				Food result11 = resultFoodSang3.get(1);
 				Food result111 = resultFoodSang3.get(2);
@@ -153,11 +153,7 @@ public class ResultMenuView extends JFrame {
 				objectSang[2][1] = result111.getSoluong();
 				objectSang[2][2] = result111.getCalo();
 			}
-		} else {
-			DoiMonSang(arrayListClick.get(0));
-		}
-		
-		if (arrayListClick.get(1) == 0) {
+
 			// bua trua
 			if (resultFoodTrua1.size() != 0) {
 				Food result1 = resultFoodTrua1.get(0);
@@ -173,7 +169,7 @@ public class ResultMenuView extends JFrame {
 				objectTrua[1][0] = result11.getTenmon();
 				objectTrua[1][1] = result11.getSoluong();
 				objectTrua[1][2] = result11.getCalo();
-			} else {
+			} else if (resultFoodTrua3.size() != 0) {
 				Food result1 = resultFoodTrua3.get(0);
 				Food result11 = resultFoodTrua3.get(1);
 				Food result111 = resultFoodTrua3.get(2);
@@ -187,11 +183,7 @@ public class ResultMenuView extends JFrame {
 				objectTrua[2][1] = result111.getSoluong();
 				objectTrua[2][2] = result111.getCalo();
 			}
-		} else {
-			DoiMonTrua(arrayListClick.get(1));
-		}
-		
-		if (arrayListClick.get(2) == 0) {
+
 			// bua toi
 			if (resultFoodToi1.size() != 0) {
 				Food result1 = resultFoodToi1.get(0);
@@ -207,7 +199,7 @@ public class ResultMenuView extends JFrame {
 				objectToi[1][0] = result11.getTenmon();
 				objectToi[1][1] = result11.getSoluong();
 				objectToi[1][2] = result11.getCalo();
-			} else {
+			} else if (resultFoodToi3.size() != 0) {
 				Food result1 = resultFoodToi3.get(0);
 				Food result11 = resultFoodToi3.get(1);
 				Food result111 = resultFoodToi3.get(2);
@@ -222,7 +214,106 @@ public class ResultMenuView extends JFrame {
 				objectToi[2][2] = result111.getCalo();
 			}
 		} else {
-			DoiMonToi(arrayListClick.get(2));
+			if (arrayListClick.get(0) == 0) {
+				// bua sang
+				if (resultFoodSang1.size() != 0) {
+					Food result1 = resultFoodSang1.get(0);
+					objectSang[0][0] = result1.getTenmon();
+					objectSang[0][1] = result1.getSoluong();
+					objectSang[0][2] = result1.getCalo();
+				} else if (resultFoodSang2.size() != 0) {
+					Food result1 = resultFoodSang2.get(0);
+					Food result11 = resultFoodSang2.get(1);
+					objectSang[0][0] = result1.getTenmon();
+					objectSang[0][1] = result1.getSoluong();
+					objectSang[0][2] = result1.getCalo();
+					objectSang[1][0] = result11.getTenmon();
+					objectSang[1][1] = result11.getSoluong();
+					objectSang[1][2] = result11.getCalo();
+				} else if (resultFoodSang3.size() != 0) {
+					Food result1 = resultFoodSang3.get(0);
+					Food result11 = resultFoodSang3.get(1);
+					Food result111 = resultFoodSang3.get(2);
+					objectSang[0][0] = result1.getTenmon();
+					objectSang[0][1] = result1.getSoluong();
+					objectSang[0][2] = result1.getCalo();
+					objectSang[1][0] = result11.getTenmon();
+					objectSang[1][1] = result11.getSoluong();
+					objectSang[1][2] = result11.getCalo();
+					objectSang[2][0] = result111.getTenmon();
+					objectSang[2][1] = result111.getSoluong();
+					objectSang[2][2] = result111.getCalo();
+				}
+			} else {
+				DoiMonSang(arrayListClick.get(0));
+			}
+			if (arrayListClick.get(1) == 0) {
+				// bua trua
+				if (resultFoodTrua1.size() != 0) {
+					Food result1 = resultFoodTrua1.get(0);
+					objectTrua[0][0] = result1.getTenmon();
+					objectTrua[0][1] = result1.getSoluong();
+					objectTrua[0][2] = result1.getCalo();
+				} else if (resultFoodTrua2.size() != 0) {
+					Food result1 = resultFoodTrua2.get(0);
+					Food result11 = resultFoodTrua2.get(1);
+					objectTrua[0][0] = result1.getTenmon();
+					objectTrua[0][1] = result1.getSoluong();
+					objectTrua[0][2] = result1.getCalo();
+					objectTrua[1][0] = result11.getTenmon();
+					objectTrua[1][1] = result11.getSoluong();
+					objectTrua[1][2] = result11.getCalo();
+				} else if (resultFoodTrua3.size() != 0) {
+					Food result1 = resultFoodTrua3.get(0);
+					Food result11 = resultFoodTrua3.get(1);
+					Food result111 = resultFoodTrua3.get(2);
+					objectTrua[0][0] = result1.getTenmon();
+					objectTrua[0][1] = result1.getSoluong();
+					objectTrua[0][2] = result1.getCalo();
+					objectTrua[1][0] = result11.getTenmon();
+					objectTrua[1][1] = result11.getSoluong();
+					objectTrua[1][2] = result11.getCalo();
+					objectTrua[2][0] = result111.getTenmon();
+					objectTrua[2][1] = result111.getSoluong();
+					objectTrua[2][2] = result111.getCalo();
+				}
+			} else {
+				DoiMonTrua(arrayListClick.get(1));
+			}
+
+			if (arrayListClick.get(2) == 0) {
+				// bua toi
+				if (resultFoodToi1.size() != 0) {
+					Food result1 = resultFoodToi1.get(0);
+					objectToi[0][0] = result1.getTenmon();
+					objectToi[0][1] = result1.getSoluong();
+					objectToi[0][2] = result1.getCalo();
+				} else if (resultFoodToi2.size() != 0) {
+					Food result1 = resultFoodToi2.get(0);
+					Food result11 = resultFoodToi2.get(1);
+					objectToi[0][0] = result1.getTenmon();
+					objectToi[0][1] = result1.getSoluong();
+					objectToi[0][2] = result1.getCalo();
+					objectToi[1][0] = result11.getTenmon();
+					objectToi[1][1] = result11.getSoluong();
+					objectToi[1][2] = result11.getCalo();
+				} else if (resultFoodToi3.size() != 0) {
+					Food result1 = resultFoodToi3.get(0);
+					Food result11 = resultFoodToi3.get(1);
+					Food result111 = resultFoodToi3.get(2);
+					objectToi[0][0] = result1.getTenmon();
+					objectToi[0][1] = result1.getSoluong();
+					objectToi[0][2] = result1.getCalo();
+					objectToi[1][0] = result11.getTenmon();
+					objectToi[1][1] = result11.getSoluong();
+					objectToi[1][2] = result11.getCalo();
+					objectToi[2][0] = result111.getTenmon();
+					objectToi[2][1] = result111.getSoluong();
+					objectToi[2][2] = result111.getCalo();
+				}
+			} else {
+				DoiMonToi(arrayListClick.get(2));
+			}
 		}
 	}
 
@@ -254,7 +345,7 @@ public class ResultMenuView extends JFrame {
 		jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
 		jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
 		jLabel1.setText("Hệ tư vấn dinh dưỡng");
-		
+
 		jButtonViewAll.setFont(new Font("Times New Roman", 1, 12)); // NOI18N
 		jButtonViewAll.setText("Xem danh sách tất cả món ăn");
 		jButtonViewAll.addActionListener(new ActionListener() {
@@ -334,24 +425,23 @@ public class ResultMenuView extends JFrame {
 														.addGap(18, 18, 18).addComponent(
 																jButton3, GroupLayout.DEFAULT_SIZE,
 																GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-										.addGroup(jPanel1Layout.createSequentialGroup()
-												.addGroup(jPanel1Layout
-														.createParallelGroup(GroupLayout.Alignment.LEADING)
-														.addComponent(jLabel5, GroupLayout.PREFERRED_SIZE, 113,
+										.addGroup(jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout
+												.createParallelGroup(GroupLayout.Alignment.LEADING)
+												.addComponent(jLabel5, GroupLayout.PREFERRED_SIZE, 113,
+														GroupLayout.PREFERRED_SIZE)
+												.addGroup(jPanel1Layout.createSequentialGroup()
+														.addComponent(jButtonViewAll, GroupLayout.PREFERRED_SIZE, 250,
 																GroupLayout.PREFERRED_SIZE)
-														.addGroup(jPanel1Layout.createSequentialGroup()
-																.addComponent(jButtonViewAll, GroupLayout.PREFERRED_SIZE, 145,
-																		GroupLayout.PREFERRED_SIZE)
-																.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-																.addComponent(labelCalo, GroupLayout.PREFERRED_SIZE, 85,
-																		GroupLayout.PREFERRED_SIZE)
-																.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-																.addComponent(jLabel4, GroupLayout.PREFERRED_SIZE, 79,
-																		GroupLayout.PREFERRED_SIZE))
-														.addComponent(jLabel6, GroupLayout.PREFERRED_SIZE, 113,
+														.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+														.addComponent(labelCalo, GroupLayout.PREFERRED_SIZE, 85,
 																GroupLayout.PREFERRED_SIZE)
-														.addComponent(jLabel7, GroupLayout.PREFERRED_SIZE, 113,
+														.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+														.addComponent(jLabel4, GroupLayout.PREFERRED_SIZE, 79,
 																GroupLayout.PREFERRED_SIZE))
+												.addComponent(jLabel6, GroupLayout.PREFERRED_SIZE, 113,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(jLabel7, GroupLayout.PREFERRED_SIZE, 113,
+														GroupLayout.PREFERRED_SIZE))
 												.addGap(0, 317, Short.MAX_VALUE)))
 										.addContainerGap())
 						.addGroup(GroupLayout.Alignment.TRAILING,
@@ -720,7 +810,7 @@ public class ResultMenuView extends JFrame {
 		homeViewUser.setVisible(true);
 		this.setVisible(false);
 	}
-	
+
 	private void jButtonViewAllActionPerformed(ActionEvent evt) {// GEN-FIRST:event_jButton4ActionPerformed
 		ListMenuView listMenuView = new ListMenuView(idUsed);
 		listMenuView.setVisible(true);
