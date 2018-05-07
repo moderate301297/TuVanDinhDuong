@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import Data.AllFood;
 import Data.Calo;
 import Data.Food;
 
@@ -154,13 +155,14 @@ public class MainController {
 	public ArrayList<ArrayList<Food>> getFoodTungBua(float calo, int i, String idUsed) {
 		ArrayList<ArrayList<Food>> arrayList = new ArrayList<>();
 		if (i == 0) {
-			String tablename = GetTableFavorite(idUsed, "bua sang");
+			String tablename = GetTableFavorite(idUsed, "Bữa Sáng");
+			System.out.println("tablename: " + tablename);
 			arrayList = GetFood(calo, tablename, "bua sang");
 		} else if (i == 1) {
-			String tablename = GetTableFavorite(idUsed, "bua trua");
+			String tablename = GetTableFavorite(idUsed, "Bữa Trưa");
 			arrayList = GetFood(calo, tablename, "bua trua");
 		} else {
-			String tablename = GetTableFavorite(idUsed, "bua toi");
+			String tablename = GetTableFavorite(idUsed, "Bữa Tối");
 			arrayList = GetFood(calo, tablename, "bua toi");
 		}
 		return arrayList;
@@ -174,10 +176,12 @@ public class MainController {
 		} catch (SQLException e) {
 			System.out.println("error: " + e);
 		}
-		if (so_thich == null) {
+		if (so_thich == "Không" || so_thich == null) {
 			so_thich = "table_mon_an";
-		} else if (so_thich.equals("mon an hue")) {
+		} else if (so_thich.equals("Món ăn huế")) {
 			so_thich = "table_mon_an_hue";
+		} else if (so_thich.equals("Món ăn hà nội")) {
+			so_thich = "table_mon_an_ha_noi";
 		}
 		return so_thich;
 	}
@@ -264,6 +268,16 @@ public class MainController {
 		ArrayList<String> arrayList = null;
 		try {
 			arrayList = User.getUser(ten, matkhau);
+		} catch (Exception e) {
+			System.err.println("error: " + e);
+		}
+		return arrayList;
+	}
+	
+	public static ArrayList<AllFood> GetAllFood() {
+		ArrayList<AllFood> arrayList = null;
+		try {
+			arrayList = QueryFood.getAllFood();
 		} catch (Exception e) {
 			System.err.println("error: " + e);
 		}

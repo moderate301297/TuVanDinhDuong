@@ -30,8 +30,8 @@ public class ResultMenuView extends JFrame {
 	private JButton jButton2;
 	private JButton jButton3;
 	private JButton jButton4;
+	private JButton jButtonViewAll;
 	private JLabel jLabel1;
-	private JLabel jLabel2;
 	private JLabel jLabel4;
 	private JLabel jLabel5;
 	private JLabel jLabel6;
@@ -123,7 +123,7 @@ public class ResultMenuView extends JFrame {
 			e.printStackTrace();
 		}
 
-		if (arrayListClick.size() == 0) {
+		if (arrayListClick.get(0) == 0) {
 			// bua sang
 			if (resultFoodSang1.size() != 0) {
 				Food result1 = resultFoodSang1.get(0);
@@ -153,7 +153,11 @@ public class ResultMenuView extends JFrame {
 				objectSang[2][1] = result111.getSoluong();
 				objectSang[2][2] = result111.getCalo();
 			}
-
+		} else {
+			DoiMonSang(arrayListClick.get(0));
+		}
+		
+		if (arrayListClick.get(1) == 0) {
 			// bua trua
 			if (resultFoodTrua1.size() != 0) {
 				Food result1 = resultFoodTrua1.get(0);
@@ -183,7 +187,11 @@ public class ResultMenuView extends JFrame {
 				objectTrua[2][1] = result111.getSoluong();
 				objectTrua[2][2] = result111.getCalo();
 			}
-
+		} else {
+			DoiMonTrua(arrayListClick.get(1));
+		}
+		
+		if (arrayListClick.get(2) == 0) {
 			// bua toi
 			if (resultFoodToi1.size() != 0) {
 				Food result1 = resultFoodToi1.get(0);
@@ -214,18 +222,14 @@ public class ResultMenuView extends JFrame {
 				objectToi[2][2] = result111.getCalo();
 			}
 		} else {
-			DoiMonSang(arrayListClick.get(0));
-			DoiMonTrua(arrayListClick.get(1));
 			DoiMonToi(arrayListClick.get(2));
 		}
-
 	}
 
 	private void initComponents(String idUsed) {
 
 		jPanel1 = new JPanel();
 		jLabel1 = new JLabel();
-		jLabel2 = new JLabel();
 		labelCalo = new JLabel();
 		jLabel4 = new JLabel();
 		jLabel5 = new JLabel();
@@ -241,6 +245,7 @@ public class ResultMenuView extends JFrame {
 		jTable3 = new JTable();
 		jButton3 = new JButton();
 		jButton4 = new JButton();
+		jButtonViewAll = new JButton();
 
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -249,6 +254,14 @@ public class ResultMenuView extends JFrame {
 		jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
 		jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
 		jLabel1.setText("Hệ tư vấn dinh dưỡng");
+		
+		jButtonViewAll.setFont(new Font("Times New Roman", 1, 12)); // NOI18N
+		jButtonViewAll.setText("Xem danh sách tất cả món ăn");
+		jButtonViewAll.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				jButtonViewAllActionPerformed(evt);
+			}
+		});
 
 		jLabel5.setText("Bữa sáng");
 
@@ -327,7 +340,7 @@ public class ResultMenuView extends JFrame {
 														.addComponent(jLabel5, GroupLayout.PREFERRED_SIZE, 113,
 																GroupLayout.PREFERRED_SIZE)
 														.addGroup(jPanel1Layout.createSequentialGroup()
-																.addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 145,
+																.addComponent(jButtonViewAll, GroupLayout.PREFERRED_SIZE, 145,
 																		GroupLayout.PREFERRED_SIZE)
 																.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 																.addComponent(labelCalo, GroupLayout.PREFERRED_SIZE, 85,
@@ -349,7 +362,7 @@ public class ResultMenuView extends JFrame {
 						.addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 						.addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-								.addComponent(jLabel2, GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+								.addComponent(jButtonViewAll, GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
 								.addComponent(labelCalo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
 										Short.MAX_VALUE)
 								.addComponent(jLabel4, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
@@ -705,6 +718,12 @@ public class ResultMenuView extends JFrame {
 		}
 		HomeViewUser homeViewUser = new HomeViewUser(idUsed);
 		homeViewUser.setVisible(true);
+		this.setVisible(false);
+	}
+	
+	private void jButtonViewAllActionPerformed(ActionEvent evt) {// GEN-FIRST:event_jButton4ActionPerformed
+		ListMenuView listMenuView = new ListMenuView(idUsed);
+		listMenuView.setVisible(true);
 		this.setVisible(false);
 	}
 }

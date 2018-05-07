@@ -5,6 +5,7 @@
  */
 package Model;
 
+import Data.AllFood;
 import Data.Calo;
 import Data.Food;
 import java.sql.Connection;
@@ -128,27 +129,33 @@ public class QueryFood {
 	/*
 	 * get all name food
 	 */
-	public static ArrayList<String> getAllFood() throws SQLException {
-		ArrayList<String> arrayList = new ArrayList<>();
+	public static ArrayList<AllFood> getAllFood() throws SQLException {
+		ArrayList<AllFood> arrayList = new ArrayList<>();
 		try (Connection conn = ConnectSQL.connectsql()) {
-			String query = "SELECT id, tenmon FROM tbl_monan";
+			String query = "SELECT id,ten_mon_an,don_vi,tong_calo,bua_an FROM hcstt.table_mon_an;";
 			PreparedStatement ps = conn.prepareStatement(query);
 			ResultSet rs;
-			// ArrayList<String> food = new ArrayList<String>();
 			rs = ps.executeQuery();
 			while (rs.next()) {
+				AllFood allFood = new AllFood();
 				String id = rs.getString("id");
-				String mon = rs.getString("tenmon");
-				System.out.println(mon);
-				arrayList.add(id);
-				arrayList.add(mon);
+				String mon = rs.getString("ten_mon_an");
+				String so_luong = rs.getString("don_vi");
+				String tong_calo = rs.getString("tong_calo");
+				String bua_an = rs.getString("bua_an");
+				allFood.setId(id);
+				allFood.setTenmon(mon);
+				allFood.setSoluong(so_luong);
+				allFood.setCalo(tong_calo);
+				allFood.setBuaAn(bua_an);
+				arrayList.add(allFood);
 			}
 			conn.close();
 			return arrayList;
 		} catch (Exception e) {
 
 		}
-		return arrayList;
+		return null;
 	}
 
 	public static ArrayList<String> getInforFoodForName(String string) {

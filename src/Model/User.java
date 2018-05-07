@@ -154,6 +154,23 @@ public class User {
 			System.err.println("error: " + e);
 		}
 	}
+	
+	public static void InsertFavorite(String sothich) throws SQLException {
+		try (Connection conn = ConnectSQL.connectsql()) {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+			Date date = new Date();
+			String dateNow = dateFormat.format(date);
+			String created_at = dateNow;
+			String query = "INSERT INTO user_favorite(so_thich,created_at) VALUE(?,?)";
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setString(1, sothich);
+			ps.setString(2, created_at);
+			ps.executeUpdate();
+			conn.close();
+		} catch (Exception e) {
+			System.err.println("error: " + e);
+		}
+	}
 
 	public static ArrayList<String> GetMucTieu(String user_id) throws SQLException {
 		ArrayList<String> arrayList = new ArrayList<>();
