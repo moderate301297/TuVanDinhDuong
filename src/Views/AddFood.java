@@ -66,7 +66,7 @@ public class AddFood extends javax.swing.JFrame {
 
 		jLabel8.setText("Bữa ăn");
 
-		jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sáng", "Trưa", "Tối" }));
+		jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "bua sang", "bua trua", "bua toi" }));
 
 		jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resource/Back.png"))); // NOI18N
 
