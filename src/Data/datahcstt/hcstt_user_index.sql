@@ -16,30 +16,38 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `user_click`
+-- Table structure for table `user_index`
 --
 
-DROP TABLE IF EXISTS `user_click`;
+DROP TABLE IF EXISTS `user_index`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user_click` (
+CREATE TABLE `user_index` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` varchar(45) DEFAULT NULL,
-  `clicked_sang` int(11) DEFAULT NULL,
-  `clicked_trua` int(11) DEFAULT NULL,
-  `clicked_toi` int(11) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  `do_cao` int(5) NOT NULL,
+  `can_nang` int(5) NOT NULL,
+  `tuoi` int(3) NOT NULL,
+  `gioi_tinh` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `muc_do_lao_dong` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
+  `muc_tieu` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `select_value` int(11) DEFAULT NULL,
+  `index_value` int(11) DEFAULT NULL,
+  `TDEE` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `updated_at` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user_click`
+-- Dumping data for table `user_index`
 --
 
-LOCK TABLES `user_click` WRITE;
-/*!40000 ALTER TABLE `user_click` DISABLE KEYS */;
-INSERT INTO `user_click` VALUES (1,'1',0,0,0);
-/*!40000 ALTER TABLE `user_click` ENABLE KEYS */;
+LOCK TABLES `user_index` WRITE;
+/*!40000 ALTER TABLE `user_index` DISABLE KEYS */;
+INSERT INTO `user_index` VALUES (1,1,165,48,22,'Nam','Trung bình','tang 2 can',0,2,'2350.19',NULL,'2018/05/06'),(2,2,165,50,22,'Nam','Trung bình','tang 1 can',0,1,'2381.19','2018/05/07','2018/05/07');
+/*!40000 ALTER TABLE `user_index` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-07 16:53:45
+-- Dump completed on 2018-05-08  2:11:41

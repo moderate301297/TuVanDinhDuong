@@ -16,29 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `users`
+-- Table structure for table `user_favorite`
 --
 
-DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `user_favorite`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `users` (
+CREATE TABLE `user_favorite` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ten` varchar(45) NOT NULL,
-  `ten_dang_nhap` varchar(45) NOT NULL,
-  `mat_khau` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`,`ten_dang_nhap`,`mat_khau`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `user_id` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `bua_an` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `so_thich` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `users`
+-- Dumping data for table `user_favorite`
 --
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'ABC','lc','12345');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+LOCK TABLES `user_favorite` WRITE;
+/*!40000 ALTER TABLE `user_favorite` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_favorite` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-07 16:53:44
+-- Dump completed on 2018-05-08  2:11:41

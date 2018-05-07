@@ -16,28 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `favorite_user`
+-- Table structure for table `user_click`
 --
 
-DROP TABLE IF EXISTS `favorite_user`;
+DROP TABLE IF EXISTS `user_click`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `favorite_user` (
+CREATE TABLE `user_click` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `so_thich` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`,`so_thich`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `user_id` varchar(45) DEFAULT NULL,
+  `clicked_sang` int(11) DEFAULT NULL,
+  `clicked_trua` int(11) DEFAULT NULL,
+  `clicked_toi` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `favorite_user`
+-- Dumping data for table `user_click`
 --
 
-LOCK TABLES `favorite_user` WRITE;
-/*!40000 ALTER TABLE `favorite_user` DISABLE KEYS */;
-INSERT INTO `favorite_user` VALUES (1,'Không','2018/05/05'),(2,'Món ăn huế','2018/05/08'),(3,'Món ăn hà nội','2018/05/08');
-/*!40000 ALTER TABLE `favorite_user` ENABLE KEYS */;
+LOCK TABLES `user_click` WRITE;
+/*!40000 ALTER TABLE `user_click` DISABLE KEYS */;
+INSERT INTO `user_click` VALUES (1,'1',0,0,0),(2,'2',1,0,24);
+/*!40000 ALTER TABLE `user_click` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-07 16:53:44
+-- Dump completed on 2018-05-08  2:11:41
