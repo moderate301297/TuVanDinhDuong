@@ -12,7 +12,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class QueryFood {
 
@@ -40,11 +43,13 @@ public class QueryFood {
 		}
 		return null;
 	}
-	
-	public static ArrayList<Calo> SearchDsFoodToFavorite(String tablemonan, String buaan, float calo, String sothich) throws SQLException {
+
+	public static ArrayList<Calo> SearchDsFoodToFavorite(String tablemonan, String buaan, float calo, String sothich)
+			throws SQLException {
 		try (Connection conn = ConnectSQL.connectsql()) {
 			ArrayList<Calo> dsfood = new ArrayList<>();
-			String query = "SELECT id,tong_calo FROM " + tablemonan + " WHERE bua_an = ? AND tong_calo < ? AND nhom = ?";
+			String query = "SELECT id,tong_calo FROM " + tablemonan
+					+ " WHERE bua_an = ? AND tong_calo < ? AND nhom = ?";
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setString(1, buaan);
 			ps.setFloat(2, calo + 30);
@@ -96,26 +101,49 @@ public class QueryFood {
 		return null;
 	}
 
-
-	public static void InsertFood(String tenmon, String soluong, String protein, String tinhbot, String lipit,
-			String nhom, String diem) throws SQLException {
+	public static boolean InsertFood(String tenmon, String soluong, String tongcalo, String buaan, String nhom)
+			throws SQLException {
 		try (Connection conn = ConnectSQL.connectsql()) {
-			String query = "INSERT INTO tbl_monan(tenmon, soluong, protein, tinhbot, lipit, nhom, diem)"
-					+ " VALUES(?,?,?,?,?,?,?)";
-			PreparedStatement ps = conn.prepareStatement(query);
-			ps.setString(1, tenmon);
-			ps.setString(2, soluong);
-			ps.setString(3, protein);
-			ps.setString(4, tinhbot);
-			ps.setString(5, lipit);
-			ps.setString(6, nhom);
-			ps.setString(7, diem);
-			ps.executeUpdate();
+			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+			Date date = new Date();
+			String dateNow = dateFormat.format(date);
+			String created_at = dateNow;
+			String updated_at = dateNow;
+			String id = null;
+			String query1 = "SELECT id FROM table_mon_an WHERE tenmon = ? AND soluong = ? AND tongcalo = ? AND buaan = ?";
+			PreparedStatement ps1 = conn.prepareStatement(query1);
+			ps1.setString(1, tenmon);
+			ps1.setString(2, soluong);
+			ps1.setString(3, tongcalo);
+			ps1.setString(4, buaan);
+			ps1.setString(5, nhom);
+			ResultSet rs1;
+			rs1 = ps1.executeQuery();
+			while (rs1.next()) {
+				id = rs1.getString("id");
+			}
+			if (id == null) {
+				return false;
+			} else {
+				String query = "INSERT INTO table_mon_an(tenmon, soluong, tongcalo, buaan, nhom, created_at, updated_at)"
+						+ " VALUES(?,?,?,?,?)";
+				PreparedStatement ps = conn.prepareStatement(query);
+				ps.setString(1, tenmon);
+				ps.setString(2, soluong);
+				ps.setString(3, tongcalo);
+				ps.setString(4, buaan);
+				ps.setString(5, nhom);
+				ps.setString(6, created_at);
+				ps.setString(6, updated_at);
+				ps.executeUpdate();
+			}
 			conn.close();
+			return false;
 		} catch (Exception e) {
 			System.err.println("error: " + e);
 			;
 		}
+		return false;
 	}
 
 	/*
@@ -152,41 +180,21 @@ public class QueryFood {
 		return null;
 	}
 
-
-	public static ArrayList<Food> GetCaloFood(int nhom) {
-		ArrayList<Food> array = new ArrayList<Food>();
+	public static ArrayList<String> getFavoriteFood() {
+		ArrayList<String> favorite = new ArrayList<String>();
 		try (Connection conn = ConnectSQL.connectsql()) {
-			String query = "SELECT * FROM tbl_monan WHERE nhom = " + nhom + " ORDER BY diem desc";
-			PreparedStatement ps = conn.prepareStatement(query);
-			ResultSet rs;
-			rs = ps.executeQuery();
+			String querry = "SELECT so_thich FROM favorite_user";
+			PreparedStatement ps = conn.prepareStatement(querry);
+			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Food food = new Food();
-				String tenmon = rs.getString("tenmon");
-				food.setTenmon(tenmon);
-				array.add(food);
+				String a = rs.getString("so_thich");
+				favorite.add(a);
 			}
-			return array;
+			return favorite;
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 		return null;
 	}
-           public static ArrayList<String> getFavoriteFood(){
-        ArrayList<String > favorite = new ArrayList<String>();
-        try (Connection conn = ConnectSQL.connectsql()){
-            String querry = "SELECT so_thich FROM favorite_user";
-            PreparedStatement ps = conn.prepareStatement(querry);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                String a = rs.getString("so_thich");
-                favorite.add(a);
-            }
-            return favorite;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
 }

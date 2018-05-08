@@ -146,7 +146,7 @@ public class ListViewFavorite extends javax.swing.JFrame {
 
 	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
 		if (idUsed == "1" ) {
-			AddFavorite h = new AddFavorite();
+			AddFavorite h = new AddFavorite(idUsed);
 			h.setVisible(true);
 			this.setVisible(false);
 		} else {

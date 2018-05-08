@@ -143,7 +143,7 @@ public class ListMenuView extends javax.swing.JFrame {
     
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     	if (idUsed.equals("1") ) {
-			AddFood h = new AddFood();
+			AddFood h = new AddFood(idUsed);
 			h.setVisible(true);
 			this.setVisible(false);
 		} else {

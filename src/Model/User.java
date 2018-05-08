@@ -151,24 +151,39 @@ public class User {
 			System.err.println("error: " + e);
 		}
 	}
-	
-	public static void InsertFavorite(String sothich) throws SQLException {
+
+	public static boolean InsertFavorite(String sothich) throws SQLException {
 		try (Connection conn = ConnectSQL.connectsql()) {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 			Date date = new Date();
 			String dateNow = dateFormat.format(date);
 			String created_at = dateNow;
-			String query = "INSERT INTO favorite_user(so_thich,created_at) VALUE(?,?)";
-			PreparedStatement ps = conn.prepareStatement(query);
-			ps.setString(1, sothich);
-			ps.setString(2, created_at);
-			ps.executeUpdate();
-			conn.close();
+			String id = null;
+			String query1 = "SELECT id FROM favorite_user WHERE sothich = ?";
+			PreparedStatement ps1 = conn.prepareStatement(query1);
+			ps1.setString(1, sothich);
+			ResultSet rs1;
+			rs1 = ps1.executeQuery();
+			while (rs1.next()) {
+				id = rs1.getString("id");
+			}
+			if (id == null) {
+				return false;
+			} else {
+				String query = "INSERT INTO favorite_user(so_thich,created_at) VALUE(?,?)";
+				PreparedStatement ps = conn.prepareStatement(query);
+				ps.setString(1, sothich);
+				ps.setString(2, created_at);
+				ps.executeUpdate();
+				conn.close();
+				return true;
+			}
 		} catch (Exception e) {
 			System.err.println("error: " + e);
 		}
+		return false;
 	}
-	
+
 	public static ArrayList<String> GetAllFavorite() throws SQLException {
 		ArrayList<String> arrayList = new ArrayList<>();
 		try (Connection conn = ConnectSQL.connectsql()) {
@@ -187,7 +202,6 @@ public class User {
 		}
 		return null;
 	}
-	
 
 	public static ArrayList<String> GetMucTieu(String user_id) throws SQLException {
 		ArrayList<String> arrayList = new ArrayList<>();
