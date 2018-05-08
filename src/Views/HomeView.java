@@ -158,17 +158,12 @@ public class HomeView extends JFrame {
 
 	private void jButtonHobbyActionPerformed(ActionEvent evt) {
 		// TODO add your handling code here:
-//		JOptionPane.showMessageDialog(this, "Bạn phải đăng nhập trước khi sử dụng tính năng này");
-                  new ListViewFavorite().setVisible(true);
-                  this.setVisible(false);
+		JOptionPane.showMessageDialog(this, "Bạn phải đăng nhập trước khi sử dụng tính năng này");
 	}// GEN-LAST:event_jButton1ActionPerformed
 
 	private void jButtonMenuActionPerformed(ActionEvent evt) {
 		// TODO add your handling code here:
 		JOptionPane.showMessageDialog(this, "Bạn phải đăng nhập trước khi sử dụng tính năng này");
-//		ListMenuView listMenuView = new ListMenuView();
-//		listMenuView.setVisible(true);
-//		this.setVisible(false);
 	}// GEN-LAST:event_jButton3ActionPerformed
 
 	private void jButtonExitActionPerformed(ActionEvent evt) {

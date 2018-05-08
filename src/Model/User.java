@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class User {
+	private static ArrayList<Integer> arrayList;
+
 	public static void InsertUser(String ten, String tendangnhap, String matkhau) throws SQLException {
 		try (Connection conn = ConnectSQL.connectsql()) {
 			String query = "INSERT INTO users(ten, ten_dang_nhap, mat_khau)" + " VALUES(?,?,?)";
@@ -136,16 +138,12 @@ public class User {
 		}
 	}
 
-	public static void UpdateFavorite(String user_id, String sothich) throws SQLException {
+	public static void UpdateFavorite(String user_id, String sothich, String buaan) throws SQLException {
 		try (Connection conn = ConnectSQL.connectsql()) {
-			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-			Date date = new Date();
-			String dateNow = dateFormat.format(date);
-			String updated_at = dateNow;
-			String query = "UPDATE user_index SET so_thich = ?, updated_at = ?" + " WHERE user_id = ?";
+			String query = "UPDATE user_favorite SET so_thich = ?, bua_an = ? WHERE user_id = ?";
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setString(1, sothich);
-			ps.setString(2, updated_at);
+			ps.setString(2, buaan);
 			ps.setString(3, user_id);
 			ps.executeUpdate();
 			conn.close();
@@ -153,6 +151,43 @@ public class User {
 			System.err.println("error: " + e);
 		}
 	}
+	
+	public static void InsertFavorite(String sothich) throws SQLException {
+		try (Connection conn = ConnectSQL.connectsql()) {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+			Date date = new Date();
+			String dateNow = dateFormat.format(date);
+			String created_at = dateNow;
+			String query = "INSERT INTO favorite_user(so_thich,created_at) VALUE(?,?)";
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setString(1, sothich);
+			ps.setString(2, created_at);
+			ps.executeUpdate();
+			conn.close();
+		} catch (Exception e) {
+			System.err.println("error: " + e);
+		}
+	}
+	
+	public static ArrayList<String> GetAllFavorite() throws SQLException {
+		ArrayList<String> arrayList = new ArrayList<>();
+		try (Connection conn = ConnectSQL.connectsql()) {
+			String query = "SELECT so_thich FROM favorite_user";
+			PreparedStatement ps = conn.prepareStatement(query);
+			ResultSet rs;
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				String so_thich = rs.getString("so_thich");
+				arrayList.add(so_thich);
+			}
+			conn.close();
+			return arrayList;
+		} catch (Exception e) {
+			System.err.println("error: " + e);
+		}
+		return null;
+	}
+	
 
 	public static ArrayList<String> GetMucTieu(String user_id) throws SQLException {
 		ArrayList<String> arrayList = new ArrayList<>();
@@ -178,12 +213,13 @@ public class User {
 		return null;
 	}
 
-	public static String GetFavorite(String user_id) throws SQLException {
+	public static String GetFavorite(String user_id, String buaan) throws SQLException {
 		String so_thich = null;
 		try (Connection conn = ConnectSQL.connectsql()) {
-			String query = "SELECT so_thich FROM user_index WHERE user_id = ?";
+			String query = "SELECT so_thich FROM user_favorite WHERE user_id = ? AND bua_an = ?";
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setString(1, user_id);
+			ps.setString(2, buaan);
 			ResultSet rs;
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -217,7 +253,7 @@ public class User {
 	public static ArrayList<Integer> GetUserClick(String user_id) throws SQLException {
 		ArrayList<Integer> arrayList = new ArrayList<>();
 		try (Connection conn = ConnectSQL.connectsql()) {
-			String query = "SELECT clicked_sang,clicked_trua,clicked_toi FROM user_click WHERE user_id = ?";
+			String query = "SELECT clicked_sang,clicked_trua,clicked_toi FROM hcstt.user_click WHERE user_id = ?;";
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setString(1, user_id);
 			ResultSet rs;
@@ -235,7 +271,7 @@ public class User {
 		} catch (Exception e) {
 			System.err.println("error: " + e);
 		}
-		return null;
+		return arrayList;
 
 	}
 
@@ -253,7 +289,7 @@ public class User {
 			}
 			if (idNew == null) {
 				String query1 = "INSERT INTO user_click(user_id, clicked_sang, clicked_trua, clicked_toi)"
-						+ " VALUES(?,?,?,?,?,?,?,?)";
+						+ " VALUES(?,?,?,?)";
 				PreparedStatement ps1 = conn.prepareStatement(query1);
 				ps1.setString(1, user_id);
 				ps1.setInt(2, clickedSang);

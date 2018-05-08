@@ -160,8 +160,8 @@ public class HomeViewUser extends JFrame {
 
 	private void jButtonHobbyActionPerformed(ActionEvent evt) {
 		// TODO add your handling code here:
-		ListViewFavorite viewFavotite = new ListViewFavorite();
-//		viewFavotite.setVisible(true);
+		ListViewFavorite viewFavotite = new ListViewFavorite(idUsed);
+		viewFavotite.setVisible(true);
 		this.setVisible(false);
 	}// GEN-LAST:event_jButton1ActionPerformed
 
@@ -170,7 +170,7 @@ public class HomeViewUser extends JFrame {
 		ResultMenuView resultMenuView = new ResultMenuView(idUsed);
 		resultMenuView.setVisible(true);
 		this.setVisible(false);
-	}// GEN-LAST:event_jButton3ActionPerformed
+	}
 
 	private void jButtonExitActionPerformed(ActionEvent evt) {
 		// TODO add your handling code here:

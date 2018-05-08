@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import Data.AllFood;
+import Data.Calo;
 import Data.Food;
 
 public class MainController {
@@ -150,53 +152,62 @@ public class MainController {
 		return arrayList;
 	}
 
-	public ArrayList<ArrayList<Food>> getFoodTungBua(float calo, int i, String tablename) {
+	public ArrayList<ArrayList<Food>> getFoodTungBua(float calo, int i, String idUsed) {
 		ArrayList<ArrayList<Food>> arrayList = new ArrayList<>();
 		if (i == 0) {
-			arrayList = GetFood(calo, tablename, "bua sang");
+			String so_thich = GetTableFavorite(idUsed, "Bữa Sáng");
+			arrayList = GetFood(calo, "table_mon_an", "bua sang",so_thich);
 		} else if (i == 1) {
-			arrayList = GetFood(calo, tablename, "bua trua");
+			String so_thich = GetTableFavorite(idUsed, "Bữa Trưa");
+			arrayList = GetFood(calo, "table_mon_an", "bua trua",so_thich);
 		} else {
-			arrayList = GetFood(calo, tablename, "bua toi");
+			String so_thich = GetTableFavorite(idUsed, "Bữa Tối");
+			arrayList = GetFood(calo, "table_mon_an", "bua toi",so_thich);
 		}
 		return arrayList;
 	}
 
-	public String GetTableFavorite(String user_id) {
+	public String GetTableFavorite(String user_id, String buaan) {
 		String so_thich = null;
 		try {
-			so_thich = User.GetFavorite(user_id);
+			so_thich = User.GetFavorite(user_id, buaan);
+			System.out.println("So thich" + so_thich);
 		} catch (SQLException e) {
 			System.out.println("error: " + e);
-		}
-		if (so_thich.equals("mon an hue")) {
-			so_thich = "table_mon_an_hue";
 		}
 		return so_thich;
 	}
 
-	private ArrayList<ArrayList<Food>> GetFood(float calo, String tablemonan, String buaan) {
-		ArrayList<Float> dsfood = new ArrayList<>();
-		ArrayList<Float> dsfoodtmp = new ArrayList<>();
-		ArrayList<Float> dsfoodnew1 = new ArrayList<>();
-		ArrayList<Float> dsfoodnew2 = new ArrayList<>();
-		ArrayList<Float> dsfoodnew3 = new ArrayList<>();
+	private ArrayList<ArrayList<Food>> GetFood(float calo, String tablemonan, String buaan, String so_thich) {
+		ArrayList<Calo> dsfood = new ArrayList<>();
+		ArrayList<String> dsfoodnew1 = new ArrayList<>();
+		ArrayList<String> dsfoodnew2 = new ArrayList<>();
+		ArrayList<String> dsfoodnew3 = new ArrayList<>();
 		ArrayList<Food> result1 = new ArrayList<>();
 		ArrayList<Food> result2 = new ArrayList<>();
 		ArrayList<Food> result3 = new ArrayList<>();
 		ArrayList<ArrayList<Food>> result = new ArrayList<>();
-		try {
-			dsfood = QueryFood.SearchDsFood(tablemonan, buaan);// all food
-		} catch (SQLException e) {
-			System.out.println("error: " + e);
+		if (so_thich == "Không" || so_thich == null) {
+			try {
+				dsfood = QueryFood.SearchDsFood(tablemonan, buaan, calo);// all food
+				System.out.println("dsfood: " + dsfood.size());
+			} catch (SQLException e) {
+				System.out.println("error: " + e);
+			}
+		} else {
+			try {
+				dsfood = QueryFood.SearchDsFoodToFavorite(tablemonan, buaan, calo,so_thich);// all food
+				System.out.println("dsfood: " + dsfood.size());
+			} catch (SQLException e) {
+				System.out.println("error: " + e);
+			}
 		}
-
 		// thuc don 1 mon
 		for (int i = 0; i < dsfood.size(); i++) {
-			float a = dsfood.get(i) - calo;
+			float a = Float.parseFloat(dsfood.get(i).getCalo()) - calo;
 			a = Math.abs(a);
-			if (a < 30) {
-				dsfoodnew1.add(dsfood.get(i));
+			if (a < 300) {
+				dsfoodnew1.add(dsfood.get(i).getId());
 			}
 		}
 		try {
@@ -206,50 +217,51 @@ public class MainController {
 			System.out.println("error: " + e);
 		}
 
-		Collections.sort(dsfood);
-		for (int i = 0; i < dsfood.size(); i++) {
-			if (dsfood.get(i) < calo) {
-				dsfoodtmp.add(dsfood.get(i));
-			}
-		}
-
-		// thuc don 2 mon
-		for (int i = 0; i < dsfoodtmp.size(); i++) {
-			for (int j = i + 1; j < dsfoodtmp.size(); j++) {
-				float a = dsfood.get(i) + dsfood.get(j) - calo;
-				a = Math.abs(a);
-				if (a < 30) {
-					dsfoodnew2.add(dsfood.get(i));
-					dsfoodnew2.add(dsfood.get(j));
-				}
-			}
-		}
-		try {
-			result2 = QueryFood.SearchFood(dsfoodnew2, tablemonan, buaan);
-			result.add(result2);
-		} catch (SQLException e) {
-			System.out.println("error: " + e);
-		}
-
-		// thuc don 3 mon
-		for (int i = 0; i < dsfoodtmp.size(); i++) {
-			for (int j = i + 1; j < dsfoodtmp.size(); j++) {
-				for (int k = j + 1; j < dsfoodtmp.size(); k++) {
-					float a = dsfood.get(i) + dsfood.get(j) + dsfood.get(k) - calo;
+		if (dsfood.size() >= 2) {
+			// thuc don 2 mon
+			for (int i = 0; i < dsfood.size(); i++) {
+				for (int j = i + 1; j < dsfood.size(); j++) {
+					float a = Float.parseFloat(dsfood.get(i).getCalo()) + Float.parseFloat(dsfood.get(j).getCalo())
+							- calo;
 					a = Math.abs(a);
 					if (a < 30) {
-						dsfoodnew3.add(dsfood.get(i));
-						dsfoodnew3.add(dsfood.get(j));
-						dsfoodnew3.add(dsfood.get(k));
+						dsfoodnew2.add(dsfood.get(i).getId());
+						dsfoodnew2.add(dsfood.get(j).getId());
 					}
 				}
 			}
+			try {
+				result2 = QueryFood.SearchFood(dsfoodnew2, tablemonan, buaan);
+				result.add(result2);
+			} catch (SQLException e) {
+				System.out.println("error: " + e);
+			}
 		}
-		try {
-			result3 = QueryFood.SearchFood(dsfoodnew3, tablemonan, buaan);
-			result.add(result3);
-		} catch (SQLException e) {
-			System.out.println("error: " + e);
+
+		if (dsfood.size() >= 3) {
+			// thuc don 3 mon
+			for (int i = 0; i < dsfood.size(); i++) {
+				for (int j = i + 1; j < dsfood.size(); j++) {
+					for (int k = j + 1; k < dsfood.size(); k++) {
+						float a = Float.parseFloat(dsfood.get(i).getCalo()) + Float.parseFloat(dsfood.get(j).getCalo())
+								+ Float.parseFloat(dsfood.get(k).getCalo()) - calo;
+						a = Math.abs(a);
+						if (a < 30) {
+							dsfoodnew3.add(dsfood.get(i).getId());
+							dsfoodnew3.add(dsfood.get(j).getId());
+							dsfoodnew3.add(dsfood.get(k).getId());
+						}
+					}
+				}
+			}
+			System.out.println("dsfoodnew3: " + dsfoodnew3.size());
+			try {
+				result3 = QueryFood.SearchFood(dsfoodnew3, tablemonan, buaan);
+				System.out.println("result3: " + result3.size());
+				result.add(result3);
+			} catch (SQLException e) {
+				System.out.println("error: " + e);
+			}
 		}
 		return result;
 	}
@@ -258,6 +270,16 @@ public class MainController {
 		ArrayList<String> arrayList = null;
 		try {
 			arrayList = User.getUser(ten, matkhau);
+		} catch (Exception e) {
+			System.err.println("error: " + e);
+		}
+		return arrayList;
+	}
+
+	public static ArrayList<AllFood> GetAllFood() {
+		ArrayList<AllFood> arrayList = null;
+		try {
+			arrayList = QueryFood.getAllFood();
 		} catch (Exception e) {
 			System.err.println("error: " + e);
 		}
