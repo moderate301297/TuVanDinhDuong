@@ -184,12 +184,13 @@ public class SignInView extends JFrame {
 		String tendangnhap = textField_User.getText();
 		String matkhau = textField_Password.getText();
 		ArrayList<String> arrayList = MainController.getUser(tendangnhap, matkhau);
-		if (arrayList == null ) {
+		if (arrayList.size() == 0 ) {
 			JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu không đúng");
 			return false;
+		} else {
+			 id = arrayList.get(0);
+			 ten = arrayList.get(1);
 		}
-	    id = arrayList.get(0);
-	    ten = arrayList.get(1);
 		return true;
 	}
 }

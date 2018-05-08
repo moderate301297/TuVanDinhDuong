@@ -60,8 +60,7 @@ public class ListViewFavorite extends javax.swing.JFrame {
 		jButton2 = new javax.swing.JButton();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		setBackground(new java.awt.Color(255, 204, 204));
-		setForeground(java.awt.Color.orange);
+		setBackground(new java.awt.Color(0, 204, 204));
 
 		jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 15)); // NOI18N
 		jLabel1.setText("Chọn sở thích của bạn ");

@@ -42,10 +42,11 @@ public class User {
 				arrayList.add(ten);
 			}
 			conn.close();
+			return arrayList;
 		} catch (Exception e) {
 			System.err.println("error: " + e);
 		}
-		return arrayList;
+		return null;
 	}
 
 	public static String getUserName(String id) throws SQLException {
@@ -140,12 +141,32 @@ public class User {
 
 	public static void UpdateFavorite(String user_id, String sothich, String buaan) throws SQLException {
 		try (Connection conn = ConnectSQL.connectsql()) {
-			String query = "UPDATE user_favorite SET so_thich = ?, bua_an = ? WHERE user_id = ?";
+			String id = null;
+			String query = "SELECT id FROM user_favorite WHERE user_id = ? AND so_thich = ? AND bua_an = ?";
 			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setString(1, user_id);
 			ps.setString(1, sothich);
-			ps.setString(2, buaan);
-			ps.setString(3, user_id);
-			ps.executeUpdate();
+			ps.setString(1, buaan);
+			ResultSet rs;
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				id = rs.getString("id");
+			}
+			if (id == null) {
+				String query1 = "INSERT INTO user_favorite(user_id,so_thich,bua_an) VALUE(?,?,?)";
+				PreparedStatement ps1 = conn.prepareStatement(query1);
+				ps1.setString(1, user_id);
+				ps1.setString(2, sothich);
+				ps1.setString(2, buaan);
+				ps1.executeUpdate();
+			} else {
+				String query2 = "UPDATE user_favorite SET so_thich = ?, bua_an = ? WHERE user_id = ?";
+				PreparedStatement ps2 = conn.prepareStatement(query2);
+				ps2.setString(1, sothich);
+				ps2.setString(2, buaan);
+				ps2.setString(3, user_id);
+				ps2.executeUpdate();
+			}
 			conn.close();
 		} catch (Exception e) {
 			System.err.println("error: " + e);
