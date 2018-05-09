@@ -90,33 +90,62 @@ public class ResultMenuView extends JFrame {
 			calo = arrayList.get(0);
 			System.out.println("caloSang: " + calo);
 			arrayListFood = controller.getFoodTungBua(calo, 0, idUsed);
-			resultFoodSang1 = arrayListFood.get(0);
-			resultFoodSang2 = arrayListFood.get(1);
-			resultFoodSang3 = arrayListFood.get(2);
-			sizeResultSang = resultFoodSang1.size() + resultFoodSang2.size() + resultFoodSang3.size();
+			if (arrayListFood.size() == 0) {
+				sizeResultSang = 0;
+			} else if (arrayListFood.size() == 1) {
+				resultFoodSang1 = arrayListFood.get(0);
+				sizeResultSang = resultFoodSang1.size();
+			} else if (arrayListFood.size() == 2) {
+				resultFoodSang1 = arrayListFood.get(0);
+				resultFoodSang2 = arrayListFood.get(1);
+				sizeResultSang = resultFoodSang1.size() + resultFoodSang2.size();
+			} else if (arrayListFood.size() == 3) {
+				resultFoodSang1 = arrayListFood.get(0);
+				resultFoodSang2 = arrayListFood.get(1);
+				resultFoodSang3 = arrayListFood.get(2);
+				sizeResultSang = resultFoodSang1.size() + resultFoodSang2.size() + resultFoodSang3.size();
+			}
 			System.out.println("sizeResultSang: " + sizeResultSang);
 
 			// bua trua
 			calo = arrayList.get(1);
 			System.out.println("caloTrua: " + calo);
 			arrayListFood = controller.getFoodTungBua(calo, 1, idUsed);
-			resultFoodTrua1 = arrayListFood.get(0);
-			resultFoodTrua2 = arrayListFood.get(1);
-			resultFoodTrua3 = arrayListFood.get(2);
-			sizeResultTrua = resultFoodTrua1.size() + resultFoodTrua2.size() + resultFoodTrua3.size();
-			System.out.println("sizeResultTrua: " + sizeResultTrua);
+			if (arrayListFood.size() == 0) {
+				sizeResultTrua = 0;
+			} else if (arrayListFood.size() == 1) {
+				resultFoodTrua1 = arrayListFood.get(0);
+				sizeResultTrua = resultFoodTrua1.size();
+			} else if (arrayListFood.size() == 2) {
+				resultFoodTrua1 = arrayListFood.get(0);
+				resultFoodTrua2 = arrayListFood.get(1);
+				sizeResultTrua = resultFoodTrua1.size() + resultFoodTrua2.size();
+			} else if (arrayListFood.size() == 3) {
+				resultFoodTrua1 = arrayListFood.get(0);
+				resultFoodTrua2 = arrayListFood.get(1);
+				resultFoodTrua3 = arrayListFood.get(2);
+				sizeResultTrua = resultFoodTrua1.size() + resultFoodTrua2.size() + resultFoodTrua3.size();
+			}
 
 			// bua toi
 			calo = arrayList.get(2);
 			System.out.println("caloToi: " + calo);
 			arrayListFood = controller.getFoodTungBua(calo, 2, idUsed);
-			resultFoodToi1 = arrayListFood.get(0);
-			resultFoodToi2 = arrayListFood.get(1);
-			resultFoodToi3 = arrayListFood.get(2);
-			sizeResultToi = resultFoodToi1.size() + resultFoodToi2.size() + resultFoodToi3.size();
-			System.out.println("resultFoodToi1: " + resultFoodToi1.size());
-			System.out.println("resultFoodToi2: " + resultFoodToi2.size());
-			System.out.println("resultFoodToi3: " + resultFoodToi3.size());
+			if (arrayListFood.size() == 0) {
+				sizeResultToi = 0;
+			} else if (arrayListFood.size() == 1) {
+				resultFoodToi1 = arrayListFood.get(0);
+				sizeResultToi = resultFoodToi1.size();
+			} else if (arrayListFood.size() == 2) {
+				resultFoodToi1 = arrayListFood.get(0);
+				resultFoodToi2 = arrayListFood.get(1);
+				sizeResultToi = resultFoodToi1.size() + resultFoodToi2.size();
+			} else if (arrayListFood.size() == 3) {
+				resultFoodToi1 = arrayListFood.get(0);
+				resultFoodToi2 = arrayListFood.get(1);
+				resultFoodToi3 = arrayListFood.get(2);
+				sizeResultToi = resultFoodToi1.size() + resultFoodToi2.size() + resultFoodToi3.size();
+			}
 			System.out.println("sizeResultToi: " + sizeResultToi);
 
 			try {
@@ -580,8 +609,9 @@ public class ResultMenuView extends JFrame {
 		DefaultTableModel model = null;
 		model = (DefaultTableModel) jTable1.getModel();
 		String[] row = new String[3];
-		if (count == sizeResultSang || resultFoodSang1.size() == 1 || resultFoodSang2.size() == 2
-				|| resultFoodSang3.size() == 3) {
+		if (count == sizeResultSang || (resultFoodSang1.size() == 1 && sizeResultSang == 1)
+				|| (resultFoodSang2.size() == 2 && sizeResultSang == 2)
+				|| (resultFoodSang3.size() == 3 && sizeResultSang == 3)) {
 			clickedSang = 0;
 			if (resultFoodSang1.size() != 0) {
 				Food result1 = resultFoodSang1.get(0);
@@ -670,8 +700,9 @@ public class ResultMenuView extends JFrame {
 		DefaultTableModel model = null;
 		model = (DefaultTableModel) jTable2.getModel();
 		String[] row = new String[3];
-		if (count == sizeResultTrua || resultFoodTrua1.size() == 1 || resultFoodTrua2.size() == 2
-				|| resultFoodTrua3.size() == 3) {
+		if (count == sizeResultTrua || (resultFoodTrua1.size() == 1 && sizeResultTrua == 1)
+				|| (resultFoodTrua2.size() == 2 && sizeResultTrua == 2)
+				|| (resultFoodTrua3.size() == 3 && sizeResultTrua == 3)) {
 			clickedTrua = 0;
 			if (resultFoodTrua1.size() != 0) {
 				Food result1 = resultFoodTrua1.get(0);
@@ -760,8 +791,9 @@ public class ResultMenuView extends JFrame {
 		DefaultTableModel model = null;
 		model = (DefaultTableModel) jTable3.getModel();
 		String[] row = new String[3];
-		if (count == sizeResultToi || resultFoodToi1.size() == 1 || resultFoodToi2.size() == 2
-				|| resultFoodToi3.size() == 3) {
+		if (count == sizeResultToi || (resultFoodToi1.size() == 1 && sizeResultToi == 1)
+				|| (resultFoodToi2.size() == 2 && sizeResultToi == 1)
+				|| (resultFoodToi3.size() == 3 && sizeResultToi == 3)) {
 			clickedToi = 0;
 			if (resultFoodToi1.size() != 0) {
 				Food result1 = resultFoodToi1.get(0);

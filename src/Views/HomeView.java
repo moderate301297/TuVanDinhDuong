@@ -21,7 +21,6 @@ public class HomeView extends JFrame {
 	}
 
 	private void initComponents() {
-
 		
 		jPanelHome = new JPanel();
 		jLabelTitle = new JLabel();

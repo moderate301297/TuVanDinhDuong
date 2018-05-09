@@ -206,12 +206,12 @@ public class AddFood extends javax.swing.JFrame {
 
 	private void chooseNhomActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
-		indexNhom = (String) jComboBox2.getSelectedItem();
+		indexNhom = jComboBox2.getSelectedItem().toString();;
 	}
 
 	private void chooseBuaAnActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
-		indexBuaAn = (String) jComboBox1.getSelectedItem();
+		indexBuaAn = jComboBox1.getSelectedItem().toString();
 	}
 
 	private void jButton1ActionPerformed(ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed

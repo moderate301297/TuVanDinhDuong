@@ -110,7 +110,7 @@ public class QueryFood {
 			String created_at = dateNow;
 			String updated_at = dateNow;
 			String id = null;
-			String query1 = "SELECT id FROM table_mon_an WHERE tenmon = ? AND soluong = ? AND tongcalo = ? AND buaan = ?";
+			String query1 = "SELECT id FROM table_mon_an WHERE ten_mon_an = ? AND don_vi = ? AND tong_calo = ? AND bua_an = ? AND nhom = ?";
 			PreparedStatement ps1 = conn.prepareStatement(query1);
 			ps1.setString(1, tenmon);
 			ps1.setString(2, soluong);
@@ -122,11 +122,12 @@ public class QueryFood {
 			while (rs1.next()) {
 				id = rs1.getString("id");
 			}
-			if (id == null) {
+			System.out.println("id " + id);
+			if (id != null) {
 				return false;
 			} else {
-				String query = "INSERT INTO table_mon_an(tenmon, soluong, tongcalo, buaan, nhom, created_at, updated_at)"
-						+ " VALUES(?,?,?,?,?)";
+				String query = "INSERT INTO table_mon_an(ten_mon_an, don_vi, tong_calo, bua_an, nhom, created_at, updated_at)"
+						+ " VALUES(?,?,?,?,?,?,?)";
 				PreparedStatement ps = conn.prepareStatement(query);
 				ps.setString(1, tenmon);
 				ps.setString(2, soluong);
@@ -134,11 +135,11 @@ public class QueryFood {
 				ps.setString(4, buaan);
 				ps.setString(5, nhom);
 				ps.setString(6, created_at);
-				ps.setString(6, updated_at);
+				ps.setString(7, updated_at);
 				ps.executeUpdate();
 			}
 			conn.close();
-			return false;
+			return true;
 		} catch (Exception e) {
 			System.err.println("error: " + e);
 			;

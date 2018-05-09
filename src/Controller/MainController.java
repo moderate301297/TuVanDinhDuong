@@ -155,13 +155,13 @@ public class MainController {
 	public ArrayList<ArrayList<Food>> getFoodTungBua(float calo, int i, String idUsed) {
 		ArrayList<ArrayList<Food>> arrayList = new ArrayList<>();
 		if (i == 0) {
-			String so_thich = GetTableFavorite(idUsed, "Bữa Sáng");
+			String so_thich = GetTableFavorite(idUsed, "bua sang");
 			arrayList = GetFood(calo, "table_mon_an", "bua sang",so_thich);
 		} else if (i == 1) {
-			String so_thich = GetTableFavorite(idUsed, "Bữa Trưa");
+			String so_thich = GetTableFavorite(idUsed, "bua trua");
 			arrayList = GetFood(calo, "table_mon_an", "bua trua",so_thich);
 		} else {
-			String so_thich = GetTableFavorite(idUsed, "Bữa Tối");
+			String so_thich = GetTableFavorite(idUsed, "bua toi");
 			arrayList = GetFood(calo, "table_mon_an", "bua toi",so_thich);
 		}
 		return arrayList;
@@ -206,7 +206,7 @@ public class MainController {
 		for (int i = 0; i < dsfood.size(); i++) {
 			float a = Float.parseFloat(dsfood.get(i).getCalo()) - calo;
 			a = Math.abs(a);
-			if (a < 300) {
+			if (a < 200) {
 				dsfoodnew1.add(dsfood.get(i).getId());
 			}
 		}
@@ -217,7 +217,6 @@ public class MainController {
 			System.out.println("error: " + e);
 		}
 
-		if (dsfood.size() >= 2) {
 			// thuc don 2 mon
 			for (int i = 0; i < dsfood.size(); i++) {
 				for (int j = i + 1; j < dsfood.size(); j++) {
@@ -236,9 +235,7 @@ public class MainController {
 			} catch (SQLException e) {
 				System.out.println("error: " + e);
 			}
-		}
 
-		if (dsfood.size() >= 3) {
 			// thuc don 3 mon
 			for (int i = 0; i < dsfood.size(); i++) {
 				for (int j = i + 1; j < dsfood.size(); j++) {
@@ -262,7 +259,6 @@ public class MainController {
 			} catch (SQLException e) {
 				System.out.println("error: " + e);
 			}
-		}
 		return result;
 	}
 

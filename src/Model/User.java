@@ -145,8 +145,8 @@ public class User {
 			String query = "SELECT id FROM user_favorite WHERE user_id = ? AND so_thich = ? AND bua_an = ?";
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setString(1, user_id);
-			ps.setString(1, sothich);
-			ps.setString(1, buaan);
+			ps.setString(2, sothich);
+			ps.setString(3, buaan);
 			ResultSet rs;
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -157,7 +157,7 @@ public class User {
 				PreparedStatement ps1 = conn.prepareStatement(query1);
 				ps1.setString(1, user_id);
 				ps1.setString(2, sothich);
-				ps1.setString(2, buaan);
+				ps1.setString(3, buaan);
 				ps1.executeUpdate();
 			} else {
 				String query2 = "UPDATE user_favorite SET so_thich = ?, bua_an = ? WHERE user_id = ?";

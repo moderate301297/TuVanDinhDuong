@@ -74,7 +74,7 @@ public class ListViewFavorite extends javax.swing.JFrame {
 			}
 		});
 
-		jComboBoxListBuaan.setModel(new DefaultComboBoxModel(new String[] { "Bữa Sáng", "Bữa Trưa", "Bữa Tối" }));
+		jComboBoxListBuaan.setModel(new DefaultComboBoxModel(new String[] { "bua sang", "bua trua", "bua toi" }));
 		jComboBoxListBuaan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				chooseBuaAnActionPerformed(evt);
@@ -124,12 +124,13 @@ public class ListViewFavorite extends javax.swing.JFrame {
 
 	private void chooseFavoriteActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
-		indexSelectFavorite = (String) jComboBoxListFavorite.getSelectedItem();
+		indexSelectFavorite = jComboBoxListFavorite.getSelectedItem().toString();
+		System.out.println("indexSelectFavorite " + indexSelectFavorite);
 	}
 
 	private void chooseBuaAnActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
-		indexSelectBuaAn = (String) jComboBoxListBuaan.getSelectedItem();
+		indexSelectBuaAn = jComboBoxListBuaan.getSelectedItem().toString();
 	}
 
 	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,39 +145,12 @@ public class ListViewFavorite extends javax.swing.JFrame {
 	}
 
 	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
-		if (idUsed == "1" ) {
+		if (idUsed.equals("1") ) {
 			AddFavorite h = new AddFavorite(idUsed);
 			h.setVisible(true);
 			this.setVisible(false);
 		} else {
 			JOptionPane.showMessageDialog(this, "Tính năng này chỉ sử dụng cho người quản trị");
 		}
-	}
-
-	public static void main(String args[]) {
-
-		try {
-			for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (ClassNotFoundException ex) {
-			Logger.getLogger(HomeView.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (InstantiationException ex) {
-			Logger.getLogger(HomeView.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (IllegalAccessException ex) {
-			Logger.getLogger(HomeView.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (UnsupportedLookAndFeelException ex) {
-			Logger.getLogger(HomeView.class.getName()).log(Level.SEVERE, null, ex);
-		}
-
-		/* Create and display the form */
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				new ListViewFavorite("1").setVisible(true);
-			}
-		});
 	}
 }
